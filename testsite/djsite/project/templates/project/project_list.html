@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список проектов</title>
+</head>
+<body>
+    <h1>Проекты</h1>
+    <ul>
+        {% for project in projects %}
+            <li>
+                <a href="{% url 'project_detail' project.pk %}">{{ project.title }}</a> - {{ project.created_at }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
