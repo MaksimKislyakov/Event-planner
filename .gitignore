@@ -4,6 +4,3 @@ testsite/venv/
 
 testsite/.env
 
-testsite/djsite/djsite/
-
-testsite/djsite/db.sqlite3
