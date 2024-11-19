@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Создать Google документ</title>
+    <title>Создать Google сервис</title>
 </head>
 <body>
-    <h1>Создать Google документ</h1>
+    <h1>Создать Google сервис</h1>
     <form method="post">
         {% csrf_token %}
-        <label for="title">Название документа:</label>
-        <input type="text" name="title" required><br>
-    
         <label for="doc_type">Тип документа:</label>
-        <select name="doc_type" required>
+        <select name="doc_type" id="doc_type">
             <option value="doc">Документ</option>
             <option value="sheet">Таблица</option>
             <option value="slide">Презентация</option>
             <option value="form">Форма</option>
-        </select><br>
-    
+        </select>
+        <br>
+        <label for="title">Название документа:</label>
+        <input type="text" name="title" id="title" required>
+        <br>
+        <label for="custom_name">Ваше название для файла:</label>
+        <input type="text" name="custom_name" id="custom_name" placeholder="Введите название">
+        <br>
         <button type="submit">Создать</button>
     </form>
+    
     <a href="{% url 'project_detail' project_id %}">Назад</a>
 </body>
 </html>

@@ -13,6 +13,7 @@ class ProjectFile(models.Model):
     file_type = models.CharField(max_length=50, verbose_name='Тип файла')
     file_url = models.URLField(verbose_name='Ссылка на файл')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления')
+    file_name = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return f"{self.file_type} для {self.project.title}"

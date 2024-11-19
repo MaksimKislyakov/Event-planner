@@ -19,7 +19,9 @@ def create_google_document(request, project_id):
     if request.method == 'POST':
         doc_type = request.POST.get('doc_type')
         title = request.POST.get('title')
-        
+        custom_name = request.POST.get('custom_name')
+        print("Custom Name:", custom_name)
+
         if doc_type == 'doc':
             file_id = create_google_doc(title)
             file_type = 'Документ'
@@ -47,7 +49,8 @@ def create_google_document(request, project_id):
         ProjectFile.objects.create(
             project=project,
             file_type=file_type,
-            file_url=file_url
+            file_url=file_url,
+            file_name=custom_name or title
         )
         return redirect('project_detail', pk=project_id)
     return render(request, 'project/create_google_document.html', {'project_id': project_id})

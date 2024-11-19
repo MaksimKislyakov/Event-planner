@@ -9,7 +9,7 @@
     <h2>Файлы:</h2>
     <ul>
         {% for file in project.files.all %}
-            <li>{{ file.file_type }}: <a href="{{ file.file_url }}" target="_blank">{{ file.file_url }}</a></li>
+            <li>{{ file.file_name }}: <a href="{{ file.file_url }}" target="_blank">{{ file.file_url }}</a></li>
         {% endfor %}
     </ul>
     <a href="{% url 'project_list' %}">Назад к списку проектов</a>
