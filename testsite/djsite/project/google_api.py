@@ -4,55 +4,63 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+from django.conf import settings
 
-CLIENT_SECRETS_FILE = "client_secret_325098205139-bci6rof494bl4u7ur59vioa478hu15p5.apps.googleusercontent.com.json"
-SCOPES = ['https://www.googleapis.com/auth/drive.file']
+# Укажите путь к клиентскому файлу через settings
+CLIENT_SECRETS_FILE = os.path.join(settings.BASE_DIR, "client_secret.json")
+SCOPES = [
+    'https://www.googleapis.com/auth/drive.file',
+    'https://www.googleapis.com/auth/forms.body',
+    'https://www.googleapis.com/auth/documents',
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/presentations',
+]
 
 def authenticate_google():
     creds = None
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
+    token_path = os.path.join(settings.BASE_DIR, 'token.pickle')  
+
+    if os.path.exists(token_path):
+        with open(token_path, 'rb') as token:
             creds = pickle.load(token)
+    
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+                CLIENT_SECRETS_FILE, SCOPES
+            )
             creds = flow.run_local_server(port=0)
-        with open('token.pickle', 'wb') as token:
+        with open(token_path, 'wb') as token:
             pickle.dump(creds, token)
+    
     return creds
 
 def create_google_doc(title):
     creds = authenticate_google()
-    service = build('drive', 'v3', credentials=creds)
-    
-    file_metadata = {
-        'name': title,
-        'mimeType': 'application/vnd.google-apps.document'
-    }
-    file = service.files().create(body=file_metadata, fields='id').execute()
-    return file.get('id')
+    service = build('docs', 'v1', credentials=creds)
+    document = {'title': title}
+    doc = service.documents().create(body=document).execute()
+    return doc.get('documentId')
 
 def create_google_sheet(title):
     creds = authenticate_google()
-    service = build('drive', 'v3', credentials=creds)
-    
-    file_metadata = {
-        'name': title,
-        'mimeType': 'application/vnd.google-apps.spreadsheet'
-    }
-    file = service.files().create(body=file_metadata, fields='id').execute()
-    return file.get('id')
+    service = build('sheets', 'v4', credentials=creds)
+    spreadsheet = {'properties': {'title': title}}
+    sheet = service.spreadsheets().create(body=spreadsheet).execute()
+    return sheet.get('spreadsheetId')
 
-def create_google_slide(title):
+def create_google_slides(title):
     creds = authenticate_google()
-    service = build('drive', 'v3', credentials=creds)
-    
-    file_metadata = {
-        'name': title,
-        'mimeType': 'application/vnd.google-apps.presentation'
-    }
-    file = service.files().create(body=file_metadata, fields='id').execute()
-    return file.get('id')
+    service = build('slides', 'v1', credentials=creds)
+    presentation = {'title': title}
+    slide = service.presentations().create(body=presentation).execute()
+    return slide.get('presentationId')
+
+def create_google_form(title):
+    creds = authenticate_google()
+    service = build('forms', 'v1', credentials=creds)
+    form = {'info': {'title': title}}
+    form_result = service.forms().create(body=form).execute()
+    return form_result.get('formId')
