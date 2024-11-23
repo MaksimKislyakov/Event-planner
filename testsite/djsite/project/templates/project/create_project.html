@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Создать проект</title>
+</head>
+<body>
+    <h1>Создать новый проект</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Создать проект</button>
+    </form>
+    {% if parent_project %}
+        <a href="{% url 'project_detail' parent_project.pk %}">Назад к проекту {{ parent_project.title }}</a>
+    {% else %}
+        <a href="{% url 'project_list' %}">Назад к списку проектов</a>
+    {% endif %}
+</body>
+</html>

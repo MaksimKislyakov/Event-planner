@@ -5,6 +5,7 @@ from .google_api import create_google_doc, create_google_sheet, create_google_sl
 import os
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+from .forms import ProjectForm  
 from django.conf import settings
 
 def project_list(request):
@@ -14,6 +15,24 @@ def project_list(request):
 def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
     return render(request, 'project/project_detail.html', {'project': project})
+
+def create_project(request, parent_id=None):
+    parent_project = None
+    if parent_id:
+        parent_project = get_object_or_404(Project, pk=parent_id)
+
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            project = form.save(commit=False)
+            if parent_project:
+                project.parent_project = parent_project
+            project.save()
+            return redirect('project_detail', pk=project.pk)
+    else:
+        form = ProjectForm()
+
+    return render(request, 'project/create_project.html', {'form': form, 'parent_project': parent_project})
 
 def create_google_document(request, project_id):
     if request.method == 'POST':

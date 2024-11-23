@@ -7,7 +7,7 @@ class ProjectFileInline(admin.TabularInline):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_at')
+    list_display = ('title', 'created_at', 'parent_project')
     inlines = [ProjectFileInline]
 
 @admin.register(ProjectFile)

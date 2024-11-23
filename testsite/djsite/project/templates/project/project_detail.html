@@ -12,6 +12,16 @@
             <li>{{ file.file_name }}: <a href="{{ file.file_url }}" target="_blank">{{ file.file_url }}</a></li>
         {% endfor %}
     </ul>
+    <a href="{% url 'create_google_document' project.pk %}">Создать Google файл</a>
+    
+    <h2>Вложенные проекты:</h2>
+    <ul>
+        {% for sub_project in project.sub_projects.all %}
+            <li><a href="{% url 'project_detail' sub_project.pk %}">{{ sub_project.title }}</a></li>
+        {% endfor %}
+    </ul>
+    
+    <a href="{% url 'create_project' parent_id=project.pk %}">Создать вложенную карточку</a>
     <a href="{% url 'project_list' %}">Назад к списку проектов</a>
 </body>
 </html>

@@ -6,7 +6,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from django.conf import settings
 
-# Укажите путь к клиентскому файлу через settings
 CLIENT_SECRETS_FILE = os.path.join(settings.BASE_DIR, "client_secret.json")
 SCOPES = [
     'https://www.googleapis.com/auth/drive.file',
