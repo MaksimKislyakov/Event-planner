@@ -4,11 +4,19 @@
     <title>Список проектов</title>
 </head>
 <body>
-    <h1>Проекты</h1>
+    <h1>Список проектов</h1>
+    
     <ul>
         {% for project in projects %}
             <li>
-                <a href="{% url 'project_detail' project.pk %}">{{ project.title }}</a> - {{ project.created_at }}
+                <a href="{% url 'project_detail' pk=project.pk %}">{{ project.title }}</a>
+                {% if project.children.exists %}
+                    <ul>
+                        {% for child in project.children.all %}
+                            <li><a href="{% url 'project_detail' pk=child.pk %}">{{ child.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>

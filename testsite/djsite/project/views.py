@@ -9,7 +9,7 @@ from .forms import ProjectForm
 from django.conf import settings
 
 def project_list(request):
-    projects = Project.objects.all()
+    projects = Project.objects.filter(parent_project__isnull=True)
     return render(request, 'project/project_list.html', {'projects': projects})
 
 def project_detail(request, pk):
