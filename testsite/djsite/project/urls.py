@@ -8,3 +8,5 @@ urlpatterns = [
     path('project/create/', views.create_project, name='create_project'),
     path('project/create/<int:parent_id>/', views.create_project, name='create_project'),
 ]
+
+

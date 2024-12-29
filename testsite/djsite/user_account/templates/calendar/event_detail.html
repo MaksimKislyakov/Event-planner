@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ event.title }}</h1>
+<p><strong>Дата:</strong> {{ event.date }}</p>
+<p><strong>Описание:</strong> {{ event.description }}</p>
+<p><strong>Организаторы:</strong></p>
+<ul>
+    {% for organizer in event.organizers.all %}
+    <li>{{ organizer.username }}</li>
+    {% endfor %}
+</ul>
+<p><strong>Участники:</strong></p>
+<ul>
+    {% for participant in event.participants.all %}
+    <li>{{ participant.username }}</li>
+    {% endfor %}
+</ul>
+<p><strong>Задачи:</strong> {{ event.tasks }}</p>
+
+{% if event.files %}
+    <p><a href="{{ event.files.url }}" download>Скачать файл {{ event.files.name }}</a></p>
+{% else %}
+    <p>Файл не прикреплен.</p>
+{% endif %}
+
+
+{% if request.user.userprofile.access_level >= 2 %}
+<a href="{% url 'manage_participants' event.id %}">Управление участниками</a>
+{% endif %}
+
+{% if request.user.userprofile.access_level == 3 %}
+<a href="{% url 'delete_event' event.id %}" onclick="return confirm('Вы уверены, что хотите удалить это мероприятие?');">Удалить мероприятие</a>
+{% endif %}
+
+
+{% endblock %}

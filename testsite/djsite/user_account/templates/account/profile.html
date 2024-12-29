@@ -1,23 +1,19 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <h1>Личный кабинет</h1>
-        <p>ФИО: {{ profile.full_name }}</p>
-        <p>Дата рождения: {{ profile.date_of_birth }}</p>
-        <p>Комиссия: {{ profile.commission }}</p>
-        {% if profile.profile_photo %}
-            <img src="{{ profile.profile_photo.url }}" alt="Фото профиля">
-        {% endif %}
-        <a href="{% url 'edit_profile' %}">Редактировать профиль</a>
-        <script src="" async defer></script>
-    </body>
-</html>
+{% block content %}
+<h1>Профиль пользователя</h1>
+<img src="{{ profile.profile_photo.url }}" alt="Фото профиля">
+<p>ФИО: {{ profile.full_name }}</p>
+<p>Дата рождения: {{ profile.date_of_birth }}</p>
+<p>Комиссия: {{ profile.commission }}</p>
+<p>Уровень доступа: {{ profile.get_access_level_display }}</p>
+
+<h2>Мероприятия, в которых вы участвуете:</h2>
+<ul>
+    {% for event in events %}
+    <li><a href="{% url 'event_detail' event.id %}">{{ event.title }}</a> ({{ event.date }})</li>
+    {% empty %}
+    <li>Вы не участвуете ни в одном мероприятии.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

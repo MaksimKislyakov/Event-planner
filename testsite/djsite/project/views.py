@@ -7,6 +7,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from .forms import ProjectForm  
 from django.conf import settings
+from django.http import JsonResponse
 
 def project_list(request):
     projects = Project.objects.filter(parent_project__isnull=True)

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Календарь мероприятий</h1>
+{% if request.user.userprofile.access_level >= 2 %}
+<a href="{% url 'create_event' %}">Создать новое мероприятие</a>
+{% endif %}
+<table>
+    <tr>
+        <th>Дата</th>
+        <th>Название</th>
+        {% if request.user.userprofile.access_level >= 2 %}
+        <th>Действия</th>
+        {% endif %}
+    </tr>
+    {% for event in events %}
+    <tr>
+        <td>{{ event.date }}</td>
+        <td><a href="{% url 'event_detail' event.id %}">{{ event.title }}</a></td>
+        {% if request.user.userprofile.access_level >= 2 %}
+        <td>
+            <a href="{% url 'edit_event' event.id %}">Редактировать</a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

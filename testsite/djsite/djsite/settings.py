@@ -34,8 +34,6 @@ SECRET_KEY = 'django-insecure-)*06r3p$2hx$2ur^6x+n_+1y-41=!hyl*$o+c46_*@x4^&=ezp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -66,12 +64,14 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
+ALLOWED_HOSTS = ['*']
+
 ROOT_URLCONF = 'djsite.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
