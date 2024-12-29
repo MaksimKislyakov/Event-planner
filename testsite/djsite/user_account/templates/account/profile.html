@@ -2,7 +2,13 @@
 
 {% block content %}
 <h1>Профиль пользователя</h1>
-<img src="{{ profile.profile_photo.url }}" alt="Фото профиля">
+
+{% if profile.profile_photo %}
+    <img src="{{ profile.profile_photo.url }}" alt="Фото профиля">
+{% else %}
+    <p>Фото не прикреплено</p>
+{% endif %}
+
 <p>ФИО: {{ profile.full_name }}</p>
 <p>Дата рождения: {{ profile.date_of_birth }}</p>
 <p>Комиссия: {{ profile.commission }}</p>
