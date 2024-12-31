@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% block content %}
+<h1>Календарь (Месяц)</h1>
+
+<div>
+    <a href="?view=month&year={{ year }}&month={{ month|add:'-1' }}"><< Предыдущий месяц</a>
+    <span>{{ year }} - {{ month }}</span>
+    <a href="?view=month&year={{ year }}&month={{ month|add:'1' }}">Следующий месяц >></a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ПН</th>
+            <th>ВТ</th>
+            <th>СР</th>
+            <th>ЧТ</th>
+            <th>ПТ</th>
+            <th>СБ</th>
+            <th>ВС</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for week in dates %}
+        <tr>
+            {% for day in week %}
+            <td>
+                {% if day and day.month == month %}
+                    <div>{{ day|date:"d" }}</div>
+                    {% for event in events|get_item:day %}
+                        <ul>
+                            <li>{{ event.title }}</li>
+                        </ul>
+                    {% endfor %}
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

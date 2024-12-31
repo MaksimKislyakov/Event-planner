@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+<h1>Календарь: День</h1>
+<p>Дата: {{ dates.0 }}</p> 
+
+<h3>Мероприятия на {{ dates.0|date:"d.m.Y" }}</h3>
+<ul>
+    {% if events|dict_key:dates.0 %}
+        {% for event in events|dict_key:dates.0 %}
+            <li>{{ event.title }} - {{ event.description }}</li>
+        {% endfor %}
+    {% else %}
+        <li>Нет мероприятий</li>
+    {% endif %}
+</ul>
+<a href="{% url 'calendar' %}?view=month">Вернуться к месячному виду</a>
+{% endblock %}

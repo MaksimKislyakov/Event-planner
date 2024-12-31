@@ -4,7 +4,10 @@ from .models import UserProfile
 from .forms import UserProfileForm, EventParticipantsForm
 from .models import Event
 from django.forms import ModelForm
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponse, HttpResponseBadRequest
+from datetime import datetime, date, timedelta
+from .utils import get_month_dates, get_week_dates, get_day_date
+import calendar
 
 
 @login_required
@@ -97,3 +100,67 @@ def delete_event(request, event_id):
     event.delete()
     return redirect('calendar')
 
+def calendar_view(request):
+    view_type = request.GET.get('view', 'month')
+    today = date.today()
+
+    # Получаем год, месяц и день из GET-запроса
+    try:
+        year = int(request.GET.get('year', today.year))
+        month = int(request.GET.get('month', today.month))
+        day = int(request.GET.get('day', today.day))
+    except ValueError:
+        return HttpResponseBadRequest("Invalid date input.")
+
+    context = {
+        'view': view_type,
+        'year': year,
+        'month': month,
+        'day': day,
+    }
+
+    if view_type == 'month':
+        # Генерация сетки для месяца
+        cal = calendar.Calendar(firstweekday=0)
+        month_days = cal.itermonthdates(year, month)
+        weeks = []
+        week = []
+
+        for single_date in month_days:
+            if len(week) == 7:  # Каждая неделя состоит из 7 дней
+                weeks.append(week)
+                week = []
+            week.append(single_date)
+
+        if week:
+            weeks.append(week)
+
+        # Получаем события за текущий месяц
+        events = Event.objects.filter(date__year=year, date__month=month)
+        event_dict = {event.date: event for event in events}
+
+        context['dates'] = weeks
+        context['events'] = event_dict  # Словарь {дата: событие}
+
+    elif view_type == 'week':
+        selected_date = date(year, month, day)
+        start_of_week = selected_date - timedelta(days=selected_date.weekday())
+        dates = [start_of_week + timedelta(days=i) for i in range(7)]
+
+        events = Event.objects.filter(date__range=(dates[0], dates[-1]))
+        event_dict = {event.date: event for event in events}
+
+        context['dates'] = dates
+        context['events'] = event_dict
+
+    elif view_type == 'day':
+        selected_date = date(year, month, day)
+        events = Event.objects.filter(date=selected_date)
+
+        context['dates'] = [selected_date]
+        context['events'] = {selected_date: events}
+
+    else:
+        return HttpResponseBadRequest("Invalid view type.")
+
+    return render(request, f'calendar/{view_type}_view.html', context)
