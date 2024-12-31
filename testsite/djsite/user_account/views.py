@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
-from .forms import UserProfileForm, EventParticipantsForm
+from .forms import UserProfileForm, EventParticipantsForm, EventForm
 from .models import Event
 from django.forms import ModelForm
 from django.http import HttpResponseForbidden, HttpResponse, HttpResponseBadRequest
@@ -104,7 +104,6 @@ def calendar_view(request):
     view_type = request.GET.get('view', 'month')
     today = date.today()
 
-    # Получаем год, месяц и день из GET-запроса
     try:
         year = int(request.GET.get('year', today.year))
         month = int(request.GET.get('month', today.month))
@@ -120,14 +119,13 @@ def calendar_view(request):
     }
 
     if view_type == 'month':
-        # Генерация сетки для месяца
         cal = calendar.Calendar(firstweekday=0)
         month_days = cal.itermonthdates(year, month)
         weeks = []
         week = []
 
         for single_date in month_days:
-            if len(week) == 7:  # Каждая неделя состоит из 7 дней
+            if len(week) == 7: 
                 weeks.append(week)
                 week = []
             week.append(single_date)
@@ -137,30 +135,46 @@ def calendar_view(request):
 
         # Получаем события за текущий месяц
         events = Event.objects.filter(date__year=year, date__month=month)
-        event_dict = {event.date: event for event in events}
+        events_by_date = {}
+
+        for event in events:
+            if event.date not in events_by_date:
+                events_by_date[event.date] = []
+            events_by_date[event.date].append(event)
 
         context['dates'] = weeks
-        context['events'] = event_dict  # Словарь {дата: событие}
+        context['events_by_date'] = events_by_date  # Словарь {дата: [события]}
 
-    elif view_type == 'week':
-        selected_date = date(year, month, day)
-        start_of_week = selected_date - timedelta(days=selected_date.weekday())
-        dates = [start_of_week + timedelta(days=i) for i in range(7)]
+    return render(request, 'calendar/month_view.html', context)
 
-        events = Event.objects.filter(date__range=(dates[0], dates[-1]))
-        event_dict = {event.date: event for event in events}
 
-        context['dates'] = dates
-        context['events'] = event_dict
+def events_by_date_view(request, date):
+    try:
+        # Преобразуем дату из строки в объект даты
+        selected_date = datetime.strptime(date, '%Y-%m-%d').date()
+    except ValueError:
+        return HttpResponseBadRequest("Invalid date input.")
 
-    elif view_type == 'day':
-        selected_date = date(year, month, day)
-        events = Event.objects.filter(date=selected_date)
+    # Получаем события для этой даты
+    events = Event.objects.filter(date=selected_date)
 
-        context['dates'] = [selected_date]
-        context['events'] = {selected_date: events}
-
+    # Обрабатываем POST-запрос для создания нового события
+    if request.method == "POST":
+        form = EventForm(request.POST)
+        if form.is_valid():
+            # Сохраняем новое событие с выбранной датой
+            new_event = form.save(commit=False)
+            new_event.date = selected_date
+            new_event.save()
+            # Перенаправляем обратно на эту же страницу
+            return redirect('events_by_date', date=date)
     else:
-        return HttpResponseBadRequest("Invalid view type.")
+        form = EventForm()
 
-    return render(request, f'calendar/{view_type}_view.html', context)
+    # Контекст для передачи в шаблон
+    context = {
+        'date': selected_date,
+        'events': events,
+        'form': form,
+    }
+    return render(request, 'calendar/events_by_date.html', context)

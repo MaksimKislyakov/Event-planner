@@ -15,3 +15,12 @@ class EventParticipantsForm(forms.ModelForm):
         queryset=User.objects.all(),
         widget=forms.CheckboxSelectMultiple
     )
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ['title', 'description']
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Название события'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Описание события'}),
+        }

@@ -1,5 +1,33 @@
 {% extends "base.html" %}
 {% load custom_filters %}
+{% block style_css %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        text-align: center;
+        padding: 8px;
+    }
+    th {
+        background-color: #f4f4f4;
+    }
+    td a {
+        text-decoration: none;
+        color: #000;
+    }
+    td div {
+        margin-bottom: 5px;
+    }
+    td ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+</style>
+{% endblock %}
 {% block content %}
 <h1>Календарь (Месяц)</h1>
 
@@ -27,12 +55,23 @@
             {% for day in week %}
             <td>
                 {% if day and day.month == month %}
-                    <div>{{ day|date:"d" }}</div>
-                    {% for event in events|get_item:day %}
-                        <ul>
-                            <li>{{ event.title }}</li>
-                        </ul>
-                    {% endfor %}
+                    <div>
+                        <a href="/events/{{ day|date:'Y-m-d' }}/">
+                            {{ day|date:"d" }}
+                        </a>
+                    </div>
+                    {% if day in events_by_date %}
+                        <div>
+                            <strong>{{ events_by_date|length }} мероприятий:</strong>
+                            <ul>
+                                {% for event in events_by_date.day%}
+                                    <li>
+                                        {{ event.title|truncatechars:100 }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 {% endif %}
             </td>
             {% endfor %}
