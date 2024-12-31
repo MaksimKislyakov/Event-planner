@@ -17,12 +17,14 @@
     <h2>Вложенные проекты:</h2>
     <ul>
         {% for sub_project in project.sub_projects.all %}
-            <li><a href="{% url 'project_detail' sub_project.pk %}">{{ sub_project.title }}</a></li>
+            <li><a href="{% url 'project_detail' c %}">{{ sub_project.title }}</a></li>
         {% endfor %}
     </ul>
     
     <a href="{% url 'create_project' parent_id=project.pk %}">Создать вложенную карточку</a><br>
-    <a href="{% url 'project_list' %}">Назад к списку проектов</a><br>
-    <a href="javascript:history.back()">Go Back</a><br>
+    <a href="{% url 'calendar' %}">Назад к календарю</a><br>
+    <a href="{{ event_url }}" class="btn btn-secondary">
+        Вернуться к мероприятию
+    </a>
 </body>
 </html>

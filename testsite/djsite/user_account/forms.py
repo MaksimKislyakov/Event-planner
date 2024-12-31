@@ -1,5 +1,6 @@
 from django import forms
 from .models import UserProfile, Event, User
+from project.models import Project
 
 
 class UserProfileForm(forms.ModelForm):
@@ -24,3 +25,14 @@ class EventForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'placeholder': 'Название события'}),
             'description': forms.Textarea(attrs={'placeholder': 'Описание события'}),
         }
+
+class EventProjectForm(forms.ModelForm):
+    projects = forms.ModelMultipleChoiceField(
+        queryset=Project.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+
+    class Meta:
+        model = Event
+        fields = ['projects']

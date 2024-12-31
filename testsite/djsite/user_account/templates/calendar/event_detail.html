@@ -24,14 +24,33 @@
     <p>Файл не прикреплен.</p>
 {% endif %}
 
+<h2>Карточки проектов</h2>
+<ul>
+  {% for project in projects %}
+    <li>
+      <a href="{% url 'project_detail' project.id %}">{{ project.title }}</a>
+    </li>
+  {% empty %}
+    <p>Нет связанных проектов.</p>
+  {% endfor %}
+</ul>
+<a href="{% url 'manage_event_projects' event.id %}">Управлять проектами или добавить новый</a>
+
+<br>
 
 {% if request.user.userprofile.access_level >= 2 %}
 <a href="{% url 'manage_participants' event.id %}">Управление участниками</a>
 {% endif %}
 
+<br>
+
 {% if request.user.userprofile.access_level == 3 %}
 <a href="{% url 'delete_event' event.id %}" onclick="return confirm('Вы уверены, что хотите удалить это мероприятие?');">Удалить мероприятие</a>
 {% endif %}
+
+<br>
+
+
 
 
 {% endblock %}

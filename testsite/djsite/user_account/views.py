@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
-from .forms import UserProfileForm, EventParticipantsForm, EventForm
+from .forms import UserProfileForm, EventParticipantsForm, EventForm, EventProjectForm
 from .models import Event
 from django.forms import ModelForm
 from django.http import HttpResponseForbidden, HttpResponse, HttpResponseBadRequest
 from datetime import datetime, date, timedelta
 from .utils import get_month_dates, get_week_dates, get_day_date
 import calendar
-
+from dateutil.relativedelta import relativedelta
+from project.models import Project
+from django.urls import reverse
 
 @login_required
 def profile(request):
@@ -36,7 +38,8 @@ def calendar_view(request):
 @login_required
 def event_detail(request, event_id):
     event = get_object_or_404(Event, id=event_id)
-    return render(request, 'calendar/event_detail.html', {'event': event})
+    projects = event.projects.all()  
+    return render(request, 'calendar/event_detail.html', {'event': event, 'projects': projects})
 
 def check_access_level(min_level):
     def decorator(view_func):
@@ -108,6 +111,12 @@ def calendar_view(request):
         year = int(request.GET.get('year', today.year))
         month = int(request.GET.get('month', today.month))
         day = int(request.GET.get('day', today.day))
+
+        if month < 1 or month > 12:
+            target_date = date(year, 1, 1) + relativedelta(months=month - 1)
+            year = target_date.year
+            month = target_date.month
+
     except ValueError:
         return HttpResponseBadRequest("Invalid date input.")
 
@@ -133,7 +142,6 @@ def calendar_view(request):
         if week:
             weeks.append(week)
 
-        # Получаем события за текущий месяц
         events = Event.objects.filter(date__year=year, date__month=month)
         events_by_date = {}
 
@@ -143,38 +151,55 @@ def calendar_view(request):
             events_by_date[event.date].append(event)
 
         context['dates'] = weeks
-        context['events_by_date'] = events_by_date  # Словарь {дата: [события]}
+        context['events_by_date'] = events_by_date  
 
     return render(request, 'calendar/month_view.html', context)
 
 
 def events_by_date_view(request, date):
     try:
-        # Преобразуем дату из строки в объект даты
         selected_date = datetime.strptime(date, '%Y-%m-%d').date()
     except ValueError:
         return HttpResponseBadRequest("Invalid date input.")
 
-    # Получаем события для этой даты
     events = Event.objects.filter(date=selected_date)
 
-    # Обрабатываем POST-запрос для создания нового события
     if request.method == "POST":
         form = EventForm(request.POST)
         if form.is_valid():
-            # Сохраняем новое событие с выбранной датой
             new_event = form.save(commit=False)
             new_event.date = selected_date
             new_event.save()
-            # Перенаправляем обратно на эту же страницу
             return redirect('events_by_date', date=date)
     else:
         form = EventForm()
 
-    # Контекст для передачи в шаблон
     context = {
         'date': selected_date,
         'events': events,
         'form': form,
     }
     return render(request, 'calendar/events_by_date.html', context)
+
+@login_required
+def manage_event_projects(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    projects = event.projects.all() 
+    create_project_url = reverse('create_project') 
+    event_detail_url = reverse('event_detail', args=[event_id]) 
+
+    if request.method == 'POST':
+        form = EventProjectForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect('event_detail', event_id=event.id)
+    else:
+        form = EventProjectForm(instance=event)
+
+    return render(request, 
+                  'calendar/manage_event_projects.html', 
+                  {'event': event,
+                   'projects': projects,
+                   'create_project_url': create_project_url,
+                   'event_detail_url': event_detail_url,
+                   })

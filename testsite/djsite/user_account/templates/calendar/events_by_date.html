@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+
 <h1>События на {{ date }}</h1>
 
 <table>
@@ -24,11 +25,9 @@
     <li>Нет событий на эту дату.</li>
     {% endfor %}
 </table>
-
 {% if request.user.userprofile.access_level >= 2 %}
 <a href="{% url 'create_event' %}">Создать новое мероприятие</a>
 {% endif %}
 <br>
-
 <a href="/">Вернуться к календарю</a>
 {% endblock %}

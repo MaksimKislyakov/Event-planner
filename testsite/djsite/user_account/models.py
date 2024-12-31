@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from project.models import Project
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -25,6 +26,7 @@ class Event(models.Model):
     files = models.FileField(upload_to='event_files/', blank=True, null=True)
     tasks = models.TextField(blank=True, null=True)
     participants = models.ManyToManyField(User, related_name='events', blank=True)
+    projects = models.ManyToManyField(Project, related_name='events', blank=True)
 
 
     def __str__(self):

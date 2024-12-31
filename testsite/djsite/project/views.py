@@ -8,6 +8,7 @@ from googleapiclient.discovery import build
 from .forms import ProjectForm  
 from django.conf import settings
 from django.http import JsonResponse
+from user_account.models import Event
 
 def project_list(request):
     projects = Project.objects.filter(parent_project__isnull=True)
@@ -19,6 +20,7 @@ def project_detail(request, pk):
 
 def create_project(request, parent_id=None):
     parent_project = None
+    event_id = request.GET.get('event_id')
     if parent_id:
         parent_project = get_object_or_404(Project, pk=parent_id)
 
@@ -29,6 +31,10 @@ def create_project(request, parent_id=None):
             if parent_project:
                 project.parent_project = parent_project
             project.save()
+
+            if event_id:
+                event = get_object_or_404(Event, id=event_id)
+                event.projects.add(project)
             return redirect('project_detail', pk=project.pk)
     else:
         form = ProjectForm()
