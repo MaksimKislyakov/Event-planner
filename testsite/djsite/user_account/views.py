@@ -152,7 +152,6 @@ def calendar_view(request):
 
         context['dates'] = weeks
         context['events_by_date'] = events_by_date  
-
     return render(request, 'calendar/month_view.html', context)
 
 

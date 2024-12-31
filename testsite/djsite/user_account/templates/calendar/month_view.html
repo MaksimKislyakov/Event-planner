@@ -62,12 +62,10 @@
                     </div>
                     {% if day in events_by_date %}
                         <div>
-                            <strong>{{ events_by_date|length }} мероприятий:</strong>
+                            <strong>Есть мероприятия</strong>
                             <ul>
-                                {% for event in events_by_date.day%}
-                                    <li>
-                                        {{ event.title|truncatechars:100 }}
-                                    </li>
+                                {% for event in events_by_date.day %}
+                                    <li>{{ event.title|truncatechars:100 }}</li>
                                 {% endfor %}
                             </ul>
                         </div>
