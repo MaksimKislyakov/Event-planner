@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -63,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ALLOWED_HOSTS = ['*']
@@ -159,3 +161,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 LOGIN_REDIRECT_URL = '/profile/'
+
+CORS_ALLOW_ALL_ORIGINS = True

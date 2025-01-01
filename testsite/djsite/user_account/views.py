@@ -1,202 +1,83 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .models import UserProfile
-from .forms import UserProfileForm, EventParticipantsForm, EventForm, EventProjectForm
-from .models import Event
-from django.forms import ModelForm
-from django.http import HttpResponseForbidden, HttpResponse, HttpResponseBadRequest
-from datetime import datetime, date, timedelta
-from .utils import get_month_dates, get_week_dates, get_day_date
-import calendar
-from dateutil.relativedelta import relativedelta
-from project.models import Project
-from django.urls import reverse
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.decorators import api_view
+from .serializers import UserProfileSerializer, EventSerializer
+from .models import UserProfile, Event
+from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated
 
-@login_required
-def profile(request):
-    profile, created = UserProfile.objects.get_or_create(user=request.user)
-    events = request.user.events.all() 
-    return render(request, 'account/profile.html', {'profile': profile, 'events': events})
+# Получение и редактирование профиля пользователя
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
 
-@login_required
-def edit_profile(request):
-    profile, created = UserProfile.objects.get_or_create(user=request.user)
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            return redirect('profile')
-    else:
-        form = UserProfileForm(instance=profile)
-    return render(request, 'account/edit_profile.html', {'form': form})
+    def get(self, request):
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
 
-@login_required
-def calendar_view(request):
-    events = Event.objects.all()
-    return render(request, 'calendar/calendar.html', {'events': events})
+        serializer = UserProfileSerializer(profile)
+        return Response(serializer.data)
 
-@login_required
-def event_detail(request, event_id):
-    event = get_object_or_404(Event, id=event_id)
-    projects = event.projects.all()  
-    return render(request, 'calendar/event_detail.html', {'event': event, 'projects': projects})
+    def put(self, request):
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
 
-def check_access_level(min_level):
-    def decorator(view_func):
-        def _wrapped_view(request, *args, **kwargs):
-            user_profile = UserProfile.objects.get(user=request.user)
-            if user_profile.access_level < min_level:
-                return HttpResponseForbidden("У вас недостаточно прав для выполнения этого действия.")
-            return view_func(request, *args, **kwargs)
-        return _wrapped_view
-    return decorator
+        serializer = UserProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class EventForm(ModelForm):
-    class Meta:
-        model = Event
-        fields = ['title', 'description', 'date', 'tasks', 'files']
+# Список событий и создание нового события
+class EventListCreateView(APIView):
+    permission_classes = [IsAuthenticated]
 
-@login_required
-@check_access_level(2)
-def create_event(request):
-    if request.method == 'POST':
-        form = EventForm(request.POST, request.FILES)
-        if form.is_valid():
-            event = form.save()
-            return redirect('calendar')
-    else:
-        form = EventForm()
-    return render(request, 'calendar/create_event.html', {'form': form})
+    def get(self, request):
+        events = Event.objects.all()
+        serializer = EventSerializer(events, many=True)
+        return Response(serializer.data)
 
-@login_required
-@check_access_level(2)
-def edit_event(request, event_id):
-    event = get_object_or_404(Event, id=event_id)
-    if request.method == 'POST':
-        form = EventForm(request.POST, request.FILES, instance=event)
-        if form.is_valid():
-            form.save()
-            return redirect('event_detail', event_id=event.id)
-    else:
-        form = EventForm(instance=event)
-    return render(request, 'calendar/edit_event.html', {'form': form})
+    def post(self, request):
+        serializer = EventSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@login_required
-@check_access_level(2)
-def manage_participants(request, event_id):
-    event = get_object_or_404(Event, id=event_id)
-    if request.method == 'POST':
-        form = EventParticipantsForm(request.POST, instance=event)
-        if form.is_valid():
-            form.save()
-            return redirect('event_detail', event_id=event.id)
-    else:
-        form = EventParticipantsForm(instance=event)
-    return render(request, 'calendar/manage_participants.html', {'form': form, 'event': event})
+# Получение и редактирование конкретного события
+class EventDetailView(APIView):
+    permission_classes = [IsAuthenticated]
 
-@login_required
-@check_access_level(3)
-def delete_event(request, event_id):
-    event = get_object_or_404(Event, id=event_id)
-    event.delete()
-    return redirect('calendar')
+    def get(self, request, event_id):
+        try:
+            event = Event.objects.get(id=event_id)
+        except Event.DoesNotExist:
+            return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
 
-def calendar_view(request):
-    view_type = request.GET.get('view', 'month')
-    today = date.today()
+        serializer = EventSerializer(event)
+        return Response(serializer.data)
 
-    try:
-        year = int(request.GET.get('year', today.year))
-        month = int(request.GET.get('month', today.month))
-        day = int(request.GET.get('day', today.day))
+    def put(self, request, event_id):
+        try:
+            event = Event.objects.get(id=event_id)
+        except Event.DoesNotExist:
+            return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        if month < 1 or month > 12:
-            target_date = date(year, 1, 1) + relativedelta(months=month - 1)
-            year = target_date.year
-            month = target_date.month
+        serializer = EventSerializer(event, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    except ValueError:
-        return HttpResponseBadRequest("Invalid date input.")
+    def delete(self, request, event_id):
+        try:
+            event = Event.objects.get(id=event_id)
+            event.delete()
+            return Response({"message": "Event deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+        except Event.DoesNotExist:
+            return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    context = {
-        'view': view_type,
-        'year': year,
-        'month': month,
-        'day': day,
-    }
-
-    if view_type == 'month':
-        cal = calendar.Calendar(firstweekday=0)
-        month_days = cal.itermonthdates(year, month)
-        weeks = []
-        week = []
-
-        for single_date in month_days:
-            if len(week) == 7: 
-                weeks.append(week)
-                week = []
-            week.append(single_date)
-
-        if week:
-            weeks.append(week)
-
-        events = Event.objects.filter(date__year=year, date__month=month)
-        events_by_date = {}
-
-        for event in events:
-            if event.date not in events_by_date:
-                events_by_date[event.date] = []
-            events_by_date[event.date].append(event)
-
-        context['dates'] = weeks
-        context['events_by_date'] = events_by_date  
-    return render(request, 'calendar/month_view.html', context)
-
-
-def events_by_date_view(request, date):
-    try:
-        selected_date = datetime.strptime(date, '%Y-%m-%d').date()
-    except ValueError:
-        return HttpResponseBadRequest("Invalid date input.")
-
-    events = Event.objects.filter(date=selected_date)
-
-    if request.method == "POST":
-        form = EventForm(request.POST)
-        if form.is_valid():
-            new_event = form.save(commit=False)
-            new_event.date = selected_date
-            new_event.save()
-            return redirect('events_by_date', date=date)
-    else:
-        form = EventForm()
-
-    context = {
-        'date': selected_date,
-        'events': events,
-        'form': form,
-    }
-    return render(request, 'calendar/events_by_date.html', context)
-
-@login_required
-def manage_event_projects(request, event_id):
-    event = get_object_or_404(Event, id=event_id)
-    projects = event.projects.all() 
-    create_project_url = reverse('create_project') 
-    event_detail_url = reverse('event_detail', args=[event_id]) 
-
-    if request.method == 'POST':
-        form = EventProjectForm(request.POST, instance=event)
-        if form.is_valid():
-            form.save()
-            return redirect('event_detail', event_id=event.id)
-    else:
-        form = EventProjectForm(instance=event)
-
-    return render(request, 
-                  'calendar/manage_event_projects.html', 
-                  {'event': event,
-                   'projects': projects,
-                   'create_project_url': create_project_url,
-                   'event_detail_url': event_detail_url,
-                   })
