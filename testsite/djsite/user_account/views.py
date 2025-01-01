@@ -81,8 +81,6 @@ def edit_event(request, event_id):
         form = EventForm(instance=event)
     return render(request, 'calendar/edit_event.html', {'form': form})
 
-from django.shortcuts import get_object_or_404
-
 @login_required
 @check_access_level(2)
 def manage_participants(request, event_id):
