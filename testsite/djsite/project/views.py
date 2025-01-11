@@ -1,113 +1,78 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.shortcuts import get_object_or_404
 from .models import Project, ProjectFile
-from django.http import HttpResponse
-from .google_api import create_google_doc, create_google_sheet, create_google_slides, create_google_form
-import os
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from .forms import ProjectForm  
-from django.conf import settings
-from django.http import JsonResponse
 from user_account.models import Event
+from .serializers import ProjectSerializer, ProjectFileSerializer
+from .google_api import create_google_doc, create_google_sheet, create_google_slides, create_google_form
 
-def project_list(request):
-    projects = Project.objects.filter(parent_project__isnull=True)
-    return render(request, 'project/project_list.html', {'projects': projects})
+class ProjectListView(APIView):
+    def get(self, request):
+        projects = Project.objects.filter(parent_project__isnull=True)
+        serializer = ProjectSerializer(projects, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-def project_detail(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-    return render(request, 'project/project_detail.html', {'project': project})
+class ProjectDetailView(APIView):
+    def get(self, request, pk):
+        project = get_object_or_404(Project, pk=pk)
+        serializer = ProjectSerializer(project)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-def create_project(request, parent_id=None):
-    parent_project = None
-    event_id = request.GET.get('event_id')
-    if parent_id:
-        parent_project = get_object_or_404(Project, pk=parent_id)
-
-    if request.method == 'POST':
-        form = ProjectForm(request.POST)
-        if form.is_valid():
-            project = form.save(commit=False)
+class CreateProjectView(APIView):
+    def post(self, request, parent_id=None):
+        parent_project = None
+        event_id = request.data.get('event_id')
+        if parent_id:
+            parent_project = get_object_or_404(Project, pk=parent_id)
+        
+        serializer = ProjectSerializer(data=request.data)
+        if serializer.is_valid():
+            project = serializer.save()
             if parent_project:
                 project.parent_project = parent_project
-            project.save()
-
+                project.save()
             if event_id:
                 event = get_object_or_404(Event, id=event_id)
                 event.projects.add(project)
-            return redirect('project_detail', pk=project.pk)
-    else:
-        form = ProjectForm()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    return render(request, 'project/create_project.html', {'form': form, 'parent_project': parent_project})
+class CreateGoogleDocumentView(APIView):
+    def post(self, request, project_id):
+        doc_type = request.data.get('doc_type')
+        title = request.data.get('title')
+        custom_name = request.data.get('custom_name')
 
-def create_google_document(request, project_id):
-    if request.method == 'POST':
-        doc_type = request.POST.get('doc_type')
-        title = request.POST.get('title')
-        custom_name = request.POST.get('custom_name')
-        print("Custom Name:", custom_name)
+        if not doc_type or not title:
+            return Response({"error": "doc_type and title are required fields."}, status=status.HTTP_400_BAD_REQUEST)
 
+        file_id, file_type, file_url = None, None, None
         if doc_type == 'doc':
             file_id = create_google_doc(title)
             file_type = 'Документ'
             file_url = f'https://docs.google.com/document/d/{file_id}/edit'
-        
         elif doc_type == 'sheet':
             file_id = create_google_sheet(title)
             file_type = 'Таблица'
             file_url = f'https://docs.google.com/spreadsheets/d/{file_id}/edit'
-        
         elif doc_type == 'slide':
-            file_id = create_google_slides(title) 
+            file_id = create_google_slides(title)
             file_type = 'Презентация'
             file_url = f'https://docs.google.com/presentation/d/{file_id}/edit'
-        
         elif doc_type == 'form':
             file_id = create_google_form(title)
             file_type = 'Форма'
             file_url = f'https://docs.google.com/forms/d/{file_id}/edit'
-        
         else:
-            return HttpResponse('Некорректный тип документа', status=400)
+            return Response({'error': 'Invalid doc_type'}, status=status.HTTP_400_BAD_REQUEST)
 
-        project = Project.objects.get(pk=project_id)
-        ProjectFile.objects.create(
+        project = get_object_or_404(Project, pk=project_id)
+        project_file = ProjectFile.objects.create(
             project=project,
             file_type=file_type,
             file_url=file_url,
             file_name=custom_name or title
         )
-        return redirect('project_detail', pk=project_id)
-    return render(request, 'project/create_google_document.html', {'project_id': project_id})
-
-def get_google_service(service_name, version, scopes):
-    credentials_path = settings.GOOGLE_APPLICATION_CREDENTIALS
-    flow = InstalledAppFlow.from_client_secrets_file(credentials_path, scopes)
-    creds = flow.run_local_server(port=8080)
-    service = build(service_name, version, credentials=creds)
-    return service
-
-def create_google_doc(title):
-    service = get_google_service('docs', 'v1', ['https://www.googleapis.com/auth/documents'])
-    document = {'title': title}
-    doc = service.documents().create(body=document).execute()
-    return doc.get('documentId')
-
-def create_google_sheet(title):
-    service = get_google_service('sheets', 'v4', ['https://www.googleapis.com/auth/spreadsheets'])
-    spreadsheet = {'properties': {'title': title}}
-    sheet = service.spreadsheets().create(body=spreadsheet).execute()
-    return sheet.get('spreadsheetId')
-
-def create_google_slides(title):
-    service = get_google_service('slides', 'v1', ['https://www.googleapis.com/auth/presentations'])
-    presentation = {'title': title}
-    slide = service.presentations().create(body=presentation).execute()
-    return slide.get('presentationId')
-
-def create_google_form(title):
-    service = get_google_service('forms', 'v1', ['https://www.googleapis.com/auth/forms.body'])
-    form = {'info': {'title': title}}
-    form_result = service.forms().create(body=form).execute()
-    return form_result.get('formId')
+        file_serializer = ProjectFileSerializer(project_file)
+        return Response(file_serializer.data, status=status.HTTP_201_CREATED)

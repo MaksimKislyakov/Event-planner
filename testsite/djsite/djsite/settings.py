@@ -14,6 +14,7 @@ from pathlib import Path
 
 import os
 from dotenv import load_dotenv
+from datetime import timedelta
 
 # Загружаем переменные окружения из файла .env
 load_dotenv()
@@ -37,6 +38,20 @@ DEBUG = True
 
 # Application definition
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # Аутентификация по токену
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+SIMPLE_JWT = {
+     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1000),
+     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+     'ROTATE_REFRESH_TOKENS': True,
+     'BLACKLIST_AFTER_ROTATION': True
+}
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -52,6 +67,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
 ]
 
