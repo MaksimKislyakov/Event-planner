@@ -47,12 +47,17 @@ class EventListCreateView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        profile = UserProfile.objects.get(user=request.user)
-        if profile.access_level < 2: 
-            return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            event = serializer.save()
+            
+            if "organizers" in request.data:
+                event.organizers.set(request.data["organizers"])
+
+            if "participants" in request.data:
+                event.participants.set(request.data["participants"])
+
+            event.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
