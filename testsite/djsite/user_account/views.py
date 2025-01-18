@@ -17,9 +17,17 @@ class ProfileView(APIView):
                 return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
         except UserProfile.DoesNotExist:
             return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        organized_events = Event.objects.filter(organizers=request.user)
+        participating_events = Event.objects.filter(participants=request.user)
+
+        event_serializer = EventSerializer(organized_events.union(participating_events), many=True)
 
         serializer = UserProfileSerializer(profile)
-        return Response(serializer.data)
+        return Response({
+            'profile': serializer.data,
+            'events': event_serializer.data
+        })
 
     def put(self, request):
         try:
@@ -50,7 +58,7 @@ class EventListCreateView(APIView):
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
             event = serializer.save()
-            
+
             if "organizers" in request.data:
                 event.organizers.set(request.data["organizers"])
 
@@ -103,3 +111,18 @@ class EventDetailView(APIView):
         except Event.DoesNotExist:
             return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
 
+class OtherProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, user_id):
+        try:
+            current_profile = UserProfile.objects.get(user=request.user)
+            if current_profile.access_level < 3: 
+                return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
+
+            profile = UserProfile.objects.get(user_id=user_id)
+        except UserProfile.DoesNotExist:
+            return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = UserProfileSerializer(profile)
+        return Response(serializer.data)

@@ -7,5 +7,6 @@ urlpatterns = [
     path('api/events/', views.EventListCreateView.as_view(), name='api_events'),
     path('api/event/<int:event_id>/', views.EventDetailView.as_view(), name='api_event_detail'),
     path('token/', jwt_views.TokenObtainPairView.as_view(), name ='token_obtain_pair'),
-    path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name ='token_refresh')
+    path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name ='token_refresh'),
+    path('api/profile/<int:user_id>/', views.OtherProfileView.as_view(), name='api_other_profile'),
 ]

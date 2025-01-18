@@ -10,7 +10,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     organizers = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
     participants = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
-
+    is_past = serializers.BooleanField(read_only=True)  
+    
     class Meta:
         model = Event
         fields = ['id', 'title', 'description', 'date', 'organizers', 'files', 'tasks', 'participants', 'projects']

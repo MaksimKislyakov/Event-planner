@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from project.models import Project
+from datetime import date
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -31,3 +32,7 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def is_past(self):
+        return self.date < date.today()

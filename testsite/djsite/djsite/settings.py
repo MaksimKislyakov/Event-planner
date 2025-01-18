@@ -48,7 +48,7 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
      'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1000),
      'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-     'ROTATE_REFRESH_TOKENS': True,
+     'ROTATE_REFRESH_TOKENS': False,
      'BLACKLIST_AFTER_ROTATION': True
 }
 
@@ -166,7 +166,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-LOGIN_REDIRECT_URL = '/'  # URL для перенаправления после успешного входа
+LOGIN_REDIRECT_URL = '/api/profile/'  # URL для перенаправления после успешного входа
 LOGOUT_REDIRECT_URL = '/'
 
 MEDIA_URL = '/media/'
