@@ -136,12 +136,12 @@ class OtherProfileView(APIView):
         })
 
 class UserListView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request):
         try:
-            users = User.objects.all()
-            serializer = UserSerializer(users, many=True)
+            users = UserProfile.objects.all()
+            serializer = UserProfileSerializer(users, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
