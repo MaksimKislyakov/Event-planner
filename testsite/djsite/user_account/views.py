@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
-from .serializers import UserProfileSerializer, EventSerializer
+from .serializers import UserProfileSerializer, EventSerializer, UserSerializer
 from .models import UserProfile, Event
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
@@ -13,8 +13,8 @@ class ProfileView(APIView):
     def get(self, request):
         try:
             profile = UserProfile.objects.get(user=request.user)
-            if profile.access_level < 2: 
-                return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
+            # if profile.access_level < 2: 
+            #     return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
         except UserProfile.DoesNotExist:
             return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
         
@@ -32,8 +32,8 @@ class ProfileView(APIView):
     def put(self, request):
         try:
             profile = UserProfile.objects.get(user=request.user)
-            if profile.access_level < 3:  
-                return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
+            # if profile.access_level < 3:  
+            #     return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
         except UserProfile.DoesNotExist:
             return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -75,8 +75,6 @@ class EventDetailView(APIView):
 
     def get(self, request, event_id):
         profile = UserProfile.objects.get(user=request.user)
-        if profile.access_level < 1: 
-            return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
         try:
             event = Event.objects.get(id=event_id)
         except Event.DoesNotExist:
@@ -117,12 +115,33 @@ class OtherProfileView(APIView):
     def get(self, request, user_id):
         try:
             current_profile = UserProfile.objects.get(user=request.user)
-            if current_profile.access_level < 3: 
+            if current_profile.access_level < 3:
                 return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
 
             profile = UserProfile.objects.get(user_id=user_id)
         except UserProfile.DoesNotExist:
             return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = UserProfileSerializer(profile)
-        return Response(serializer.data)
+        user = profile.user
+        organized_events = Event.objects.filter(organizers=user)
+        participating_events = Event.objects.filter(participants=user)
+
+        event_serializer = EventSerializer(organized_events.union(participating_events), many=True)
+
+        profile_serializer = UserProfileSerializer(profile)
+
+        return Response({
+            'profile': profile_serializer.data,
+            'events': event_serializer.data
+        })
+
+class UserListView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            users = User.objects.all()
+            serializer = UserSerializer(users, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

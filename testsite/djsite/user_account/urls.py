@@ -9,4 +9,5 @@ urlpatterns = [
     path('token/', jwt_views.TokenObtainPairView.as_view(), name ='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name ='token_refresh'),
     path('api/profile/<int:user_id>/', views.OtherProfileView.as_view(), name='api_other_profile'),
+    path('api/users/', views.UserListView.as_view(), name='api_user_list'),
 ]
