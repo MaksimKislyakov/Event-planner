@@ -8,6 +8,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'full_name', 'date_of_birth', 'commission', 'profile_photo', 'access_level']
 
 class EventSerializer(serializers.ModelSerializer):
+    organizers = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
+    participants = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
+
     class Meta:
         model = Event
         fields = ['id', 'title', 'description', 'date', 'organizers', 'files', 'tasks', 'participants', 'projects']
