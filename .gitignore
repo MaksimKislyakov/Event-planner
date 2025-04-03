@@ -1,6 +1,5 @@
-testsite/credentials/client_secret_325098205139-bci6rof494bl4u7ur59vioa478hu15p5.apps.googleusercontent.com.json
-
 testsite/venv/
 
 testsite/.env
 
+testsite/djsite/credentails/client_secret.json
