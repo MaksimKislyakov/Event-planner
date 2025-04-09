@@ -9,12 +9,10 @@ from rest_framework.permissions import IsAuthenticated
 
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]
-
+    
     def get(self, request):
         try:
             profile = UserProfile.objects.get(user=request.user)
-            # if profile.access_level < 2: 
-            #     return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
         except UserProfile.DoesNotExist:
             return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
         
@@ -136,7 +134,7 @@ class OtherProfileView(APIView):
         })
 
 class UserListView(APIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         try:

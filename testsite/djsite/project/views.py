@@ -6,20 +6,27 @@ from .models import Project, ProjectFile
 from user_account.models import Event
 from .serializers import ProjectSerializer, ProjectFileSerializer
 from .google_api import create_google_doc, create_google_sheet, create_google_slides, create_google_form
+from rest_framework.permissions import IsAuthenticated
 
 class ProjectListView(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request):
         projects = Project.objects.filter(parent_project__isnull=True)
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class ProjectDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, pk):
         project = get_object_or_404(Project, pk=pk)
         serializer = ProjectSerializer(project)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class CreateProjectView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, parent_id=None):
         parent_project = None
         event_id = request.data.get('event_id')
@@ -39,6 +46,8 @@ class CreateProjectView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CreateGoogleDocumentView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, project_id):
         doc_type = request.data.get('doc_type')
         title = request.data.get('title')

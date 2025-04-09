@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ['id', 'user', 'full_name', 'date_of_birth', 'commission', 'profile_photo', 'access_level']
+        fields = ['id', 'user', 'full_name', 'date_of_birth', 'commission', 'profile_photo', 'access_level', 'status', 'number_phone', 'email', 'adress']
 
 class EventSerializer(serializers.ModelSerializer):
     organizers = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)

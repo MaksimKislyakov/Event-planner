@@ -8,6 +8,7 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+    
 class ProjectFile(models.Model):
     project = models.ForeignKey(Project, related_name='files', on_delete=models.CASCADE, verbose_name='Проект')
     file_type = models.CharField(max_length=50, verbose_name='Тип файла')
