@@ -2,4 +2,4 @@ testsite/venv/
 
 testsite/.env
 
-testsite/djsite/credentails/client_secret.json
+testsite/djsite/client_secret.json
