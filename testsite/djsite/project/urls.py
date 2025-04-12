@@ -2,9 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('projects/', views.ProjectListView.as_view(), name='project_list'),
-    path('projects/<int:pk>/', views.ProjectDetailView.as_view(), name='project_detail'),
-    path('projects/create/', views.CreateProjectView.as_view(), name='create_project'),
-    path('projects/create/<int:parent_id>/', views.CreateProjectView.as_view(), name='create_project_with_parent'),
-    path('projects/<int:project_id>/create_google_document/', views.CreateGoogleDocumentView.as_view(), name='create_google_document'),
+    path('', views.ProjectListView.as_view(), name='project_list'),
+    path('<int:pk>/', views.ProjectDetailView.as_view(), name='project_detail'),
+    path('create/', views.CreateProjectView.as_view(), name='create_project'),
+    # path('create_parent/<int:parent_id>/', views.CreateProjectView.as_view(), name='create_project_with_parent'),
+    path('<int:project_id>/create_google_service/', views.CreateGoogleDocumentView.as_view(), name='create_google_service'),
 ]

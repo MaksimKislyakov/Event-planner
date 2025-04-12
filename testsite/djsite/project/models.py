@@ -4,7 +4,7 @@ class Project(models.Model):
     title = models.CharField(max_length=255, verbose_name='Название проекта')
     description = models.TextField(blank=True, verbose_name='Описание проекта')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    parent_project = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='sub_projects', verbose_name='Родительский проект')
+    parent_project = models.ForeignKey('self', null=True, blank=False, on_delete=models.CASCADE, related_name='sub_projects', verbose_name='Родительский проект')
 
     def __str__(self):
         return self.title
