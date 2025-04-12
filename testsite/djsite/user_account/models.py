@@ -34,7 +34,7 @@ class Event(models.Model):
     tasks = models.TextField(blank=True, null=True)
     participants = models.ManyToManyField(User, related_name='events', blank=True)
     projects = models.ManyToManyField(Project, related_name='events', blank=True)
-    # is_past = models.BooleanField(blank=True)
+    is_past = models.IntegerField()
 
     def __str__(self):
         return self.title

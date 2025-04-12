@@ -1,17 +1,20 @@
+import os
+from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.decorators import api_view
 from .serializers import UserProfileSerializer, EventSerializer #, UserSerializer
 from .models import UserProfile, Event
 # from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.parsers import MultiPartParser, FormParser
+# from rest_framework.parsers import MultiPartParser, FormParser
+from django.shortcuts import get_object_or_404
+
 
 
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]
-    # parser_classes = [MultiPartParser, FormParser]
     
     def get(self, request, user_id):
         try:
@@ -33,10 +36,18 @@ class ProfileView(APIView):
     def put(self, request, user_id):
         try:
             profile = UserProfile.objects.get(user_id=user_id)
-            # if profile.access_level < 3:  
-            #     return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
         except UserProfile.DoesNotExist:
             return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        profile_photo_path = request.data.get('profile_photos', None)
+
+        if profile_photo_path:
+            file_path = os.path.join(settings.MEDIA_ROOT, profile_photo_path.lstrip('/'))
+
+            if os.path.exists(file_path):
+                profile.profile_photo = profile_photo_path
+            else:
+                return Response({"error": "File not found"}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = UserProfileSerializer(profile, data=request.data, partial=True)
         if serializer.is_valid():
@@ -46,7 +57,7 @@ class ProfileView(APIView):
     
 
 class OtherProfileView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, user_id):
         try:
@@ -123,7 +134,7 @@ class EventDetailView(APIView):
         serializer = EventSerializer(event)
         return Response(serializer.data)
 
-    def put(self, request, event_id):
+    def post(self, request, event_id):
         profile = UserProfile.objects.get(user=request.user)
         if profile.access_level < 3:  
             return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
