@@ -10,7 +10,27 @@ from .models import UserProfile, Event
 from rest_framework.permissions import IsAuthenticated
 # from rest_framework.parsers import MultiPartParser, FormParser
 from django.shortcuts import get_object_or_404
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        try:
+            profile = UserProfile.objects.get(user=self.user)
+            data['user_id'] = self.user.id
+            data['profile_id'] = profile.id
+            data['access_level'] = profile.access_level
+        except UserProfile.DoesNotExist:
+            data['user_id'] = self.user.id
+            data['profile_id'] = None
+            data['access_level'] = None
+
+        return data
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
 
 
 class ProfileView(APIView):

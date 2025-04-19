@@ -185,4 +185,7 @@ EMAIL_USE_TLS = True
 
 LOGIN_REDIRECT_URL = '/profile/'
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # твой фронт
+]
