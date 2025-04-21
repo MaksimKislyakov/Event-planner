@@ -101,6 +101,28 @@ class OtherProfileView(APIView):
             'profile': profile_serializer.data,
             'events': event_serializer.data
         })
+    
+    def put(self, request, user_id):
+        try:
+            current_profile = UserProfile.objects.get(user=request.user)
+            if current_profile.access_level < 3:
+                return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
+
+            profile = UserProfile.objects.get(user_id=user_id)
+        except UserProfile.DoesNotExist:
+            return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Разрешаем изменять только поле commission
+        if 'commission' not in request.data:
+            return Response({"error": "Only commission field can be updated"}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = UserProfileSerializer(profile, data={'commission': request.data['commission']}, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
 
 class UserListView(APIView):
     permission_classes = [IsAuthenticated]
