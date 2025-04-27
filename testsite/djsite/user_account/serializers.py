@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserProfile, Event
+from .models import UserProfile, Event, Tasks
 from django.contrib.auth.models import User
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -20,3 +20,21 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email']
+
+class TasksSerializer(serializers.ModelSerializer):
+    creator = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+    executor = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), 
+        allow_null=True, 
+        required=False
+    )
+    event = serializers.PrimaryKeyRelatedField(
+        queryset=Event.objects.all()
+    )
+
+    class Meta:
+        model = Tasks
+        fields = ['id', 'task', 'description', 'event', 'deadline', 'creator', 'executor', 'status']
+

@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.decorators import api_view
-from .serializers import UserProfileSerializer, EventSerializer #, UserSerializer
-from .models import UserProfile, Event
+from .serializers import UserProfileSerializer, EventSerializer, TasksSerializer
+from .models import UserProfile, Event, Tasks
 # from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 # from rest_framework.parsers import MultiPartParser, FormParser
@@ -105,7 +105,7 @@ class OtherProfileView(APIView):
     def put(self, request, user_id):
         try:
             current_profile = UserProfile.objects.get(user=request.user)
-            if current_profile.access_level < 3:
+            if current_profile.access_level  < 3:
                 return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
 
             profile = UserProfile.objects.get(user_id=user_id)
@@ -176,7 +176,7 @@ class EventDetailView(APIView):
         serializer = EventSerializer(event)
         return Response(serializer.data)
 
-    def post(self, request, event_id):
+    def put(self, request, event_id): 
         profile = UserProfile.objects.get(user=request.user)
         if profile.access_level < 3:  
             return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
@@ -201,3 +201,52 @@ class EventDetailView(APIView):
             return Response({"message": "Event deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
         except Event.DoesNotExist:
             return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+
+class TaskListCreateView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        event_id = request.query_params.get('event_id')
+        if event_id:
+            tasks = Tasks.objects.filter(event_id=event_id)
+        else:
+            tasks = Tasks.objects.all()
+        
+        serializer = TasksSerializer(tasks, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = TasksSerializer(
+            data=request.data,
+            context={'request': request}  
+        )
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class TaskDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self, task_id):
+        return get_object_or_404(Tasks, id=task_id)
+
+    def get(self, request, task_id):
+        task = self.get_object(task_id)
+        serializer = TasksSerializer(task)
+        return Response(serializer.data)
+
+    def put(self, request, task_id):
+        task = self.get_object(task_id)
+        serializer = TasksSerializer(task, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, task_id):
+        task = self.get_object(task_id)
+        task.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
