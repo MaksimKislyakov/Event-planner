@@ -31,7 +31,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
-
+    
 
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]
@@ -112,7 +112,6 @@ class OtherProfileView(APIView):
         except UserProfile.DoesNotExist:
             return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        # Разрешаем изменять только поле commission
         if 'commission' not in request.data:
             return Response({"error": "Only commission field can be updated"}, status=status.HTTP_400_BAD_REQUEST)
 
