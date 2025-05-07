@@ -114,8 +114,11 @@ class OtherProfileView(APIView):
 
         if 'commission' not in request.data:
             return Response({"error": "Only commission field can be updated"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if 'status' not in request.data:
+            return Response({"error": "Only status field can be updated"}, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = UserProfileSerializer(profile, data={'commission': request.data['commission']}, partial=True)
+        serializer = UserProfileSerializer(profile, data={'commission': request.data['commission'], 'status': request.data['status']}, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
