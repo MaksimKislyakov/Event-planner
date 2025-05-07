@@ -8,8 +8,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'full_name', 'date_of_birth', 'commission', 'profile_photo', 'access_level', 'status', 'number_phone', 'email', 'adress']
 
 class EventSerializer(serializers.ModelSerializer):
-    organizers = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
-    participants = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
+    organizers = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
+    participants = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
     is_past = serializers.BooleanField()  
     
     class Meta:
@@ -22,17 +22,9 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email']
 
 class TasksSerializer(serializers.ModelSerializer):
-    creator = serializers.HiddenField(
-        default=serializers.CurrentUserDefault()
-    )
-    executor = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(), 
-        allow_null=True, 
-        required=False
-    )
-    event = serializers.PrimaryKeyRelatedField(
-        queryset=Event.objects.all()
-    )
+    creator = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    executor = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), allow_null=True, required=False)
+    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
 
     class Meta:
         model = Tasks
