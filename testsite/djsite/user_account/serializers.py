@@ -3,6 +3,12 @@ from .models import UserProfile, Event, Tasks
 from django.contrib.auth.models import User
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    status = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+        help_text="Должность пользователя"
+    )
     class Meta:
         model = UserProfile
         fields = ['id', 'user', 'full_name', 'date_of_birth', 'commission', 'profile_photo', 'access_level', 'status', 'number_phone', 'email', 'adress']
