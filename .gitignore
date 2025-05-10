@@ -1,5 +1,7 @@
-testsite/venv/
+djsite/client_secret.json
 
-testsite/.env
+venv/
 
-testsite/djsite/client_secret.json
+.env
+
+credentials/
