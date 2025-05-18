@@ -32,7 +32,6 @@ class Event(models.Model):
     date = models.DateField()
     organizers = models.ManyToManyField(User, related_name='organized_events', blank=True)
     files = models.FileField(upload_to='event_files/', blank=True, null=True)
-    tasks = models.TextField(blank=True, null=True)
     participants = models.ManyToManyField(User, related_name='events', blank=True)
     projects = models.ManyToManyField(Project, related_name='events', blank=True)
     is_past = models.IntegerField(default=0)
