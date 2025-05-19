@@ -16,6 +16,8 @@ class ProjectListView(APIView):
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    
+
 class ProjectDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -23,6 +25,11 @@ class ProjectDetailView(APIView):
         project = get_object_or_404(Project, pk=pk)
         serializer = ProjectSerializer(project)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def delete(self, request, pk):
+            project = get_object_or_404(Project, pk=pk)
+            project.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
 class CreateProjectView(APIView):
     permission_classes = [IsAuthenticated]
