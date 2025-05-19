@@ -216,21 +216,17 @@ class TaskListCreateView(APIView):
             tasks = Tasks.objects.all()
         
         serializer = TasksSerializer(tasks, many=True)
-        print("Получены задачи:", serializer.data)
         return Response(serializer.data)
 
     def post(self, request):
-        print("Получены данные для создания задачи:", request.data)
         serializer = TasksSerializer(
             data=request.data,
-            context={'request': request}
+            context={'request': request}  
         )
         
         if serializer.is_valid():
-            task = serializer.save()
-            print("Задача создана:", TasksSerializer(task).data)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        print("Ошибки валидации:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class TaskDetailView(APIView):
