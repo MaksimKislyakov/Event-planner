@@ -40,8 +40,8 @@ class Event(models.Model):
         return self.title
 
 class Tasks(models.Model):
-    task = models.CharField(max_length=200)
-    description = models.CharField(blank=True, max_length=2000)
+    task = models.CharField(max_length=20000)
+    description = models.CharField(blank=True, max_length=20000)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='tasks_for_event')
     deadline = models.DateField(blank=True, null=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_tasks')

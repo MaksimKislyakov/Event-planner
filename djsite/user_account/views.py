@@ -12,6 +12,9 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+import logging
+
+logger = logging.getLogger(__name__)
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -55,25 +58,38 @@ class ProfileView(APIView):
 
     def put(self, request, user_id):
         try:
+            logger.info(f'Начало обновления профиля для пользователя {user_id}')
+            logger.info(f'Полученные данные: {request.data}')
+            logger.info(f'Полученные файлы: {request.FILES}')
+            
             profile = UserProfile.objects.get(user_id=user_id)
-        except UserProfile.DoesNotExist:
-            return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
+            logger.info(f'Найден профиль: {profile}')
+            
+            profile_photo_path = request.data.get('profile_photos', None)
+            logger.info(f'Путь к фото из запроса: {profile_photo_path}')
 
-        profile_photo_path = request.data.get('profile_photos', None)
+            if profile_photo_path:
+                file_path = os.path.join(settings.MEDIA_ROOT, profile_photo_path.lstrip('/'))
+                logger.info(f'Полный путь к файлу: {file_path}')
+                logger.info(f'Существует ли файл: {os.path.exists(file_path)}')
 
-        if profile_photo_path:
-            file_path = os.path.join(settings.MEDIA_ROOT, profile_photo_path.lstrip('/'))
+                if os.path.exists(file_path):
+                    profile.profile_photo = profile_photo_path
+                    logger.info(f'Фото обновлено: {profile.profile_photo}')
+                else:
+                    logger.error(f'Файл не найден по пути: {file_path}')
+                    return Response({"error": "File not found"}, status=status.HTTP_400_BAD_REQUEST)
 
-            if os.path.exists(file_path):
-                profile.profile_photo = profile_photo_path
-            else:
-                return Response({"error": "File not found"}, status=status.HTTP_400_BAD_REQUEST)
-
-        serializer = UserProfileSerializer(profile, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            serializer = UserProfileSerializer(profile, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                logger.info(f'Профиль успешно обновлен: {serializer.data}')
+                return Response(serializer.data)
+            logger.error(f'Ошибки валидации: {serializer.errors}')
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            logger.error(f'Ошибка при обновлении профиля: {str(e)}', exc_info=True)
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 
 class OtherProfileView(APIView):
