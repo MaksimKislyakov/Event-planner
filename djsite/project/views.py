@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from .models import Project, ProjectFile
 from user_account.models import Event
 from .serializers import ProjectSerializer, ProjectFileSerializer
-from .google_api import create_google_doc, create_google_sheet, create_google_slides, create_google_form
+from .google_api import create_google_doc, create_google_sheet, create_google_slides, create_google_form, delete_google_file
 from rest_framework.permissions import IsAuthenticated
 
 class ProjectListView(APIView):
@@ -92,3 +92,23 @@ class CreateGoogleDocumentView(APIView):
         )
         file_serializer = ProjectFileSerializer(project_file)
         return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, file_id):
+        try:
+            # Получаем файл из базы данных
+            project_file = get_object_or_404(ProjectFile, id=file_id)
+            
+            # Извлекаем ID файла из URL
+            file_url = project_file.file_url
+            google_file_id = file_url.split('/')[-2]  # Получаем ID файла из URL
+            
+            # Удаляем файл из Google Drive
+            if delete_google_file(google_file_id):
+                # Если удаление из Google Drive успешно, удаляем запись из базы данных
+                project_file.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                return Response({"error": "Failed to delete file from Google Drive."}, 
+                              status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

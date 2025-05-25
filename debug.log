@@ -1,0 +1,120 @@
+INFO 2025-05-25 22:03:38,596 autoreload 3996 8932 Watching for file changes with StatReloader
+INFO 2025-05-25 22:03:51,988 basehttp 3996 16256 "OPTIONS /token/ HTTP/1.1" 200 0
+WARNING 2025-05-25 22:03:53,408 log 3996 2864 Unauthorized: /token/
+WARNING 2025-05-25 22:03:53,408 basehttp 3996 2864 "POST /token/ HTTP/1.1" 401 63
+WARNING 2025-05-25 22:03:54,997 log 3996 2864 Unauthorized: /token/
+WARNING 2025-05-25 22:03:54,997 basehttp 3996 2864 "POST /token/ HTTP/1.1" 401 63
+INFO 2025-05-25 22:04:11,334 basehttp 3996 2864 "POST /token/ HTTP/1.1" 200 527
+INFO 2025-05-25 22:04:11,499 basehttp 3996 16256 "OPTIONS /api/users/ HTTP/1.1" 200 0
+INFO 2025-05-25 22:04:11,513 basehttp 3996 16256 "GET /api/users/ HTTP/1.1" 200 1519
+INFO 2025-05-25 22:04:11,528 basehttp 3996 16256 "OPTIONS /api/profile/1/ HTTP/1.1" 200 0
+INFO 2025-05-25 22:04:11,536 basehttp 3996 16256 "GET /api/profile/1/ HTTP/1.1" 200 426
+INFO 2025-05-25 22:04:11,541 basehttp 3996 16256 "OPTIONS /api/tasks/?user_id=1 HTTP/1.1" 200 0
+INFO 2025-05-25 22:04:11,545 basehttp 3996 16256 "GET /api/tasks/?user_id=1 HTTP/1.1" 200 2
+INFO 2025-05-25 22:04:11,553 basehttp 3996 16256 "OPTIONS /projects/ HTTP/1.1" 200 0
+INFO 2025-05-25 22:04:11,558 basehttp 3996 16256 "GET /projects/ HTTP/1.1" 200 2
+WARNING 2025-05-25 22:04:11,601 log 3996 2864 Not Found: /media/profile_photos/DSC_0726_uM16ajZ_OUJFFX9_evOi8JX.JPG
+WARNING 2025-05-25 22:04:11,601 basehttp 3996 2864 "GET /media/profile_photos/DSC_0726_uM16ajZ_OUJFFX9_evOi8JX.JPG HTTP/1.1" 404 5492
+INFO 2025-05-25 22:04:16,539 views 3996 16256 Начало обновления профиля для пользователя 1
+INFO 2025-05-25 22:04:16,548 views 3996 16256 Полученные данные: <QueryDict: {'status': ['Председатель'], 'commission': ['По работе с наставниками'], 'date_of_birth': ['2005-06-21'], 'number_phone': ['+73434561222'], 'email': ['maksifmkfff@gmail.om'], 'adress': ['Фонвизина 8 а'], 'profile_photo': [<InMemoryUploadedFile: фото 2.jpg (image/jpeg)>]}>
+INFO 2025-05-25 22:04:16,549 views 3996 16256 Полученные файлы: <MultiValueDict: {'profile_photo': [<InMemoryUploadedFile: фото 2.jpg (image/jpeg)>]}>
+INFO 2025-05-25 22:04:16,551 views 3996 16256 Найден профиль: maksi
+INFO 2025-05-25 22:04:16,551 views 3996 16256 Путь к фото из запроса: None
+INFO 2025-05-25 22:04:17,002 views 3996 16256 Профиль успешно обновлен: {'id': 1, 'user': 1, 'full_name': 'Максим Кисляков Вячеславович', 'date_of_birth': '2005-06-21', 'commission': 'По работе с наставниками', 'profile_photo': '/media/profile_photos/%D1%84%D0%BE%D1%82%D0%BE_2.jpg', 'access_level': 3, 'status': 'Председатель', 'number_phone': '+73434561222', 'email': 'maksifmkfff@gmail.om', 'adress': 'Фонвизина 8 а'}
+INFO 2025-05-25 22:04:17,002 basehttp 3996 16256 "PUT /api/profile/1/ HTTP/1.1" 200 396
+INFO 2025-05-25 22:04:17,088 basehttp 3996 16640 "GET /media/profile_photos/%D1%84%D0%BE%D1%82%D0%BE_2.jpg HTTP/1.1" 200 2398346
+INFO 2025-05-25 22:04:20,863 basehttp 3996 16256 "OPTIONS /api/events/ HTTP/1.1" 200 0
+INFO 2025-05-25 22:04:20,868 basehttp 3996 16256 "GET /api/events/ HTTP/1.1" 200 2
+INFO 2025-05-25 22:04:20,878 basehttp 3996 16256 "GET /api/users/ HTTP/1.1" 200 1513
+INFO 2025-05-25 22:04:26,368 basehttp 3996 16256 "POST /api/events/ HTTP/1.1" 201 149
+INFO 2025-05-25 22:04:26,375 basehttp 3996 16256 "GET /api/events/ HTTP/1.1" 200 151
+INFO 2025-05-25 22:04:27,102 basehttp 3996 16256 "OPTIONS /api/event/1/ HTTP/1.1" 200 0
+INFO 2025-05-25 22:04:27,110 basehttp 3996 16256 "GET /api/event/1/ HTTP/1.1" 200 149
+INFO 2025-05-25 22:04:27,120 basehttp 3996 16256 "GET /api/users/ HTTP/1.1" 200 1513
+INFO 2025-05-25 22:04:27,127 basehttp 3996 16256 "GET /projects/ HTTP/1.1" 200 2
+INFO 2025-05-25 22:04:49,112 basehttp 3996 16256 "OPTIONS /projects/create/ HTTP/1.1" 200 0
+INFO 2025-05-25 22:04:49,151 basehttp 3996 16256 "POST /projects/create/ HTTP/1.1" 201 156
+INFO 2025-05-25 22:04:49,158 basehttp 3996 16256 "GET /projects/ HTTP/1.1" 200 158
+INFO 2025-05-25 22:04:50,100 basehttp 3996 16256 "GET /api/event/1/ HTTP/1.1" 200 150
+INFO 2025-05-25 22:04:50,107 basehttp 3996 16256 "OPTIONS /projects/1/ HTTP/1.1" 200 0
+INFO 2025-05-25 22:04:50,114 basehttp 3996 16256 "GET /projects/1/ HTTP/1.1" 200 156
+INFO 2025-05-25 22:04:53,737 basehttp 3996 16256 "OPTIONS /projects/1/create_google_service/ HTTP/1.1" 200 0
+INFO 2025-05-25 22:04:58,260 basehttp 3996 16256 "POST /projects/1/create_google_service/ HTTP/1.1" 201 215
+INFO 2025-05-25 22:04:58,270 basehttp 3996 16256 "GET /projects/1/ HTTP/1.1" 200 371
+INFO 2025-05-25 22:05:00,858 basehttp 3996 16256 "OPTIONS /api/project_file/1/ HTTP/1.1" 200 0
+WARNING 2025-05-25 22:05:00,864 log 3996 16256 Not Found: /api/project_file/1/
+WARNING 2025-05-25 22:05:00,864 basehttp 3996 16256 "DELETE /api/project_file/1/ HTTP/1.1" 404 5295
+WARNING 2025-05-25 22:05:32,487 log 3996 1388 Not Found: /
+WARNING 2025-05-25 22:05:32,488 basehttp 3996 1388 "GET / HTTP/1.1" 404 5217
+WARNING 2025-05-25 22:05:32,742 log 3996 1388 Not Found: /
+WARNING 2025-05-25 22:05:32,743 basehttp 3996 1388 "GET / HTTP/1.1" 404 5217
+WARNING 2025-05-25 22:05:32,918 log 3996 1388 Not Found: /favicon.ico
+WARNING 2025-05-25 22:05:32,919 basehttp 3996 1388 "GET /favicon.ico HTTP/1.1" 404 5268
+INFO 2025-05-25 22:05:39,575 basehttp 3996 1388 "GET /projects HTTP/1.1" 301 0
+INFO 2025-05-25 22:05:39,719 basehttp 3996 3752 "GET /projects/ HTTP/1.1" 200 10999
+INFO 2025-05-25 22:05:39,743 basehttp 3996 20024 "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+INFO 2025-05-25 22:05:39,746 basehttp 3996 9140 "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+INFO 2025-05-25 22:05:39,746 basehttp 3996 8160 "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3426
+INFO 2025-05-25 22:05:39,749 basehttp 3996 3752 "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+INFO 2025-05-25 22:05:39,757 basehttp 3996 10776 "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3796
+INFO 2025-05-25 22:05:39,768 basehttp 3996 20024 "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1793
+INFO 2025-05-25 22:05:39,785 basehttp 3996 1284 "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+INFO 2025-05-25 22:05:39,791 basehttp 3996 20024 "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 200 59
+INFO 2025-05-25 22:05:39,797 basehttp 3996 10776 "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+INFO 2025-05-25 22:05:39,805 basehttp 3996 9140 "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+INFO 2025-05-25 22:05:39,811 basehttp 3996 8160 "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+INFO 2025-05-25 22:05:39,819 basehttp 3996 8160 "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+WARNING 2025-05-25 22:05:45,044 log 3996 8160 Not Found: /projects/19/
+WARNING 2025-05-25 22:05:45,045 basehttp 3996 8160 "GET /projects/19/ HTTP/1.1" 404 11363
+INFO 2025-05-25 22:05:47,586 basehttp 3996 8160 "GET /projects/ HTTP/1.1" 200 10999
+INFO 2025-05-25 22:05:50,288 basehttp 3996 8160 "GET /projects/123123 HTTP/1.1" 301 0
+WARNING 2025-05-25 22:05:50,298 log 3996 9140 Not Found: /projects/123123/
+WARNING 2025-05-25 22:05:50,299 basehttp 3996 9140 "GET /projects/123123/ HTTP/1.1" 404 11391
+WARNING 2025-05-25 22:05:52,520 log 3996 9140 Not Found: /projectss/123123/
+WARNING 2025-05-25 22:05:52,521 basehttp 3996 9140 "GET /projectss/123123/ HTTP/1.1" 404 5286
+WARNING 2025-05-25 22:05:57,097 log 3996 9140 Not Found: /projects/s
+WARNING 2025-05-25 22:05:57,097 basehttp 3996 9140 "GET /projects/s HTTP/1.1" 404 6245
+INFO 2025-05-25 22:07:46,664 autoreload 3996 8932 D:\Codes\ProjectPrac\backend\djsite\project\google_api.py changed, reloading.
+INFO 2025-05-25 22:07:55,087 autoreload 14384 11140 Watching for file changes with StatReloader
+INFO 2025-05-25 22:08:20,490 basehttp 14384 6536 "GET /api/event/1/ HTTP/1.1" 200 150
+INFO 2025-05-25 22:08:20,501 basehttp 14384 6536 "GET /projects/1/ HTTP/1.1" 200 371
+WARNING 2025-05-25 22:08:21,809 log 14384 6536 Not Found: /api/project_file/1/
+WARNING 2025-05-25 22:08:21,809 basehttp 14384 6536 "DELETE /api/project_file/1/ HTTP/1.1" 404 5295
+INFO 2025-05-25 22:08:29,878 basehttp 14384 6536 "GET /api/users/ HTTP/1.1" 200 1513
+INFO 2025-05-25 22:08:29,895 basehttp 14384 6536 "GET /api/profile/1/ HTTP/1.1" 200 570
+INFO 2025-05-25 22:08:29,901 basehttp 14384 6536 "GET /api/tasks/?user_id=1 HTTP/1.1" 200 2
+INFO 2025-05-25 22:08:29,909 basehttp 14384 6536 "GET /projects/ HTTP/1.1" 200 373
+INFO 2025-05-25 22:08:30,229 basehttp 14384 9748 "GET /media/profile_photos/%D1%84%D0%BE%D1%82%D0%BE_2.jpg HTTP/1.1" 304 0
+WARNING 2025-05-25 22:11:34,984 log 14384 21704 Not Found: /projects/s
+WARNING 2025-05-25 22:11:34,985 basehttp 14384 21704 "GET /projects/s HTTP/1.1" 404 6245
+INFO 2025-05-25 22:11:36,558 basehttp 14384 6536 "GET /api/users/ HTTP/1.1" 200 1513
+INFO 2025-05-25 22:11:36,573 basehttp 14384 6536 "GET /api/profile/1/ HTTP/1.1" 200 570
+INFO 2025-05-25 22:11:36,581 basehttp 14384 6536 "GET /api/tasks/?user_id=1 HTTP/1.1" 200 2
+INFO 2025-05-25 22:11:36,589 basehttp 14384 6536 "GET /projects/ HTTP/1.1" 200 373
+INFO 2025-05-25 22:11:36,596 basehttp 14384 9748 "GET /media/profile_photos/%D1%84%D0%BE%D1%82%D0%BE_2.jpg HTTP/1.1" 304 0
+INFO 2025-05-25 22:11:38,138 basehttp 14384 6536 "GET /api/event/1/ HTTP/1.1" 200 150
+INFO 2025-05-25 22:11:38,146 basehttp 14384 6536 "GET /api/users/ HTTP/1.1" 200 1513
+INFO 2025-05-25 22:11:38,155 basehttp 14384 6536 "GET /projects/ HTTP/1.1" 200 373
+INFO 2025-05-25 22:11:39,470 basehttp 14384 6536 "GET /api/event/1/ HTTP/1.1" 200 150
+INFO 2025-05-25 22:11:39,483 basehttp 14384 6536 "GET /projects/1/ HTTP/1.1" 200 371
+WARNING 2025-05-25 22:11:41,615 log 14384 6536 Not Found: /api/project_file/1/
+WARNING 2025-05-25 22:11:41,616 basehttp 14384 6536 "DELETE /api/project_file/1/ HTTP/1.1" 404 5295
+INFO 2025-05-25 22:12:14,038 autoreload 14384 11140 D:\Codes\ProjectPrac\backend\djsite\project\urls.py changed, reloading.
+INFO 2025-05-25 22:12:15,053 autoreload 11916 16468 Watching for file changes with StatReloader
+INFO 2025-05-25 22:12:20,300 autoreload 11916 16468 D:\Codes\ProjectPrac\backend\djsite\project\views.py changed, reloading.
+INFO 2025-05-25 22:12:21,313 autoreload 13196 13504 Watching for file changes with StatReloader
+INFO 2025-05-25 22:12:27,185 basehttp 13196 9820 "GET /api/event/1/ HTTP/1.1" 200 150
+INFO 2025-05-25 22:12:27,197 basehttp 13196 9820 "GET /projects/1/ HTTP/1.1" 200 371
+WARNING 2025-05-25 22:12:28,668 log 13196 9820 Not Found: /api/project_file/1/
+WARNING 2025-05-25 22:12:28,669 basehttp 13196 9820 "DELETE /api/project_file/1/ HTTP/1.1" 404 5295
+WARNING 2025-05-25 22:12:35,846 log 13196 8936 Not Found: /api/project_file/1/
+WARNING 2025-05-25 22:12:35,846 basehttp 13196 8936 "GET /api/project_file/1/ HTTP/1.1" 404 5292
+WARNING 2025-05-25 22:12:36,021 log 13196 8936 Not Found: /favicon.ico
+WARNING 2025-05-25 22:12:36,022 basehttp 13196 8936 "GET /favicon.ico HTTP/1.1" 404 5268
+INFO 2025-05-25 22:13:17,369 basehttp 13196 9820 "GET /api/event/1/ HTTP/1.1" 200 150
+INFO 2025-05-25 22:13:17,378 basehttp 13196 9820 "GET /projects/1/ HTTP/1.1" 200 371
+INFO 2025-05-25 22:13:22,601 basehttp 13196 9820 "GET /api/event/1/ HTTP/1.1" 200 150
+INFO 2025-05-25 22:13:22,611 basehttp 13196 9820 "GET /projects/1/ HTTP/1.1" 200 371
+INFO 2025-05-25 22:13:24,378 basehttp 13196 9820 "OPTIONS /projects/project_file/1/ HTTP/1.1" 200 0
+INFO 2025-05-25 22:13:26,270 basehttp 13196 9820 "DELETE /projects/project_file/1/ HTTP/1.1" 204 0
+INFO 2025-05-25 22:13:26,278 basehttp 13196 9820 "GET /projects/1/ HTTP/1.1" 200 156

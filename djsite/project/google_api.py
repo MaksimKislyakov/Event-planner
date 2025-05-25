@@ -96,3 +96,13 @@ def create_google_form(title):
     form_id = form_result.get('formId')
     make_file_public(form_id)
     return form_id
+
+def delete_google_file(file_id):
+    global credentials
+    drive_service = build('drive', 'v3', credentials=credentials)
+    try:
+        drive_service.files().delete(fileId=file_id).execute()
+        return True
+    except HttpError as error:
+        print(f"Ошибка при удалении файла: {error}")
+        return False
