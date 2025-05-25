@@ -26,7 +26,7 @@ class EventSerializer(serializers.ModelSerializer):
     organizers = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
     participants = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
     is_past = serializers.BooleanField()
-    is_cancelled = serializers.BooleanField()
+    is_cancelled = serializers.BooleanField(required=False)
     tasks = TasksSerializer(many=True, read_only=True, source='tasks_for_event')
     
     class Meta:
