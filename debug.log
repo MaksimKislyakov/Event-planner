@@ -2156,3 +2156,317 @@ INFO 2025-05-26 02:19:31,976 basehttp 12636 18532 "GET /api/events/ HTTP/1.1" 20
 INFO 2025-05-26 02:19:35,914 basehttp 12636 18532 "GET /api/users/ HTTP/1.1" 200 1562
 INFO 2025-05-26 02:19:35,924 basehttp 12636 18532 "GET /api/profile/1/ HTTP/1.1" 200 855
 INFO 2025-05-26 02:19:35,930 basehttp 12636 18532 "GET /api/tasks/ HTTP/1.1" 200 452
+INFO 2025-05-26 02:21:33,000 autoreload 15212 18612 Watching for file changes with StatReloader
+INFO 2025-05-26 02:21:42,820 basehttp 15212 14092 "GET /api/events/ HTTP/1.1" 200 803
+INFO 2025-05-26 02:21:47,354 basehttp 15212 14092 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:21:47,365 basehttp 15212 14092 "GET /api/profile/1/ HTTP/1.1" 200 855
+INFO 2025-05-26 02:21:47,373 basehttp 15212 14092 "GET /api/tasks/ HTTP/1.1" 200 452
+INFO 2025-05-26 02:22:31,650 basehttp 15212 14092 "GET /api/events/ HTTP/1.1" 200 803
+INFO 2025-05-26 02:22:33,400 basehttp 15212 14092 "GET /api/event/1/ HTTP/1.1" 200 435
+INFO 2025-05-26 02:22:33,407 basehttp 15212 14092 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:22:33,418 basehttp 15212 14092 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:24:48,469 basehttp 15212 14092 "GET /api/event/1/ HTTP/1.1" 200 435
+INFO 2025-05-26 02:24:48,476 basehttp 15212 14092 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:24:48,490 basehttp 15212 14092 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:26:02,649 basehttp 15212 15336 "GET /api/event/1/ HTTP/1.1" 200 435
+INFO 2025-05-26 02:26:02,656 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:26:02,664 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:26:45,352 basehttp 15212 15336 "GET /api/event/1/ HTTP/1.1" 200 435
+INFO 2025-05-26 02:26:45,360 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:26:45,370 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:26:54,768 basehttp 15212 15336 "PUT /api/event/1/ HTTP/1.1" 200 434
+INFO 2025-05-26 02:26:55,734 basehttp 15212 15336 "PUT /api/event/1/ HTTP/1.1" 200 435
+INFO 2025-05-26 02:26:56,364 basehttp 15212 15336 "PUT /api/event/1/ HTTP/1.1" 200 433
+INFO 2025-05-26 02:26:56,900 basehttp 15212 15336 "PUT /api/event/1/ HTTP/1.1" 200 435
+INFO 2025-05-26 02:29:14,571 basehttp 15212 15336 "GET /api/event/1/ HTTP/1.1" 200 435
+INFO 2025-05-26 02:29:14,578 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:29:14,586 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:29:27,732 basehttp 15212 15336 "POST /api/tasks/ HTTP/1.1" 201 203
+INFO 2025-05-26 02:29:39,118 basehttp 15212 15336 "POST /api/tasks/ HTTP/1.1" 201 230
+INFO 2025-05-26 02:31:04,676 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1238
+INFO 2025-05-26 02:31:04,683 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:31:55,425 basehttp 15212 15336 "GET /api/event/2/ HTTP/1.1" 200 365
+INFO 2025-05-26 02:31:55,438 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:31:55,447 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:31:55,669 basehttp 15212 15336 "GET /api/event/2/ HTTP/1.1" 200 365
+INFO 2025-05-26 02:31:55,686 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:31:55,703 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:31:58,758 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1238
+INFO 2025-05-26 02:31:58,767 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:34:14,244 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1238
+INFO 2025-05-26 02:34:14,251 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:36:18,354 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1238
+INFO 2025-05-26 02:36:18,361 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:36:34,188 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1238
+INFO 2025-05-26 02:36:34,196 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:36:55,355 basehttp 15212 15336 "POST /api/events/ HTTP/1.1" 201 174
+INFO 2025-05-26 02:36:55,370 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1413
+INFO 2025-05-26 02:37:03,328 basehttp 15212 15336 "GET /api/event/2/ HTTP/1.1" 200 365
+INFO 2025-05-26 02:37:03,339 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:37:03,347 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:37:05,155 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1413
+INFO 2025-05-26 02:37:05,164 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:37:05,863 basehttp 15212 15336 "OPTIONS /api/event/3/ HTTP/1.1" 200 0
+INFO 2025-05-26 02:37:05,871 basehttp 15212 15336 "GET /api/event/3/ HTTP/1.1" 200 174
+INFO 2025-05-26 02:37:05,881 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:37:05,889 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:37:06,467 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1413
+INFO 2025-05-26 02:37:06,474 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:37:06,814 basehttp 15212 15336 "GET /api/event/1/ HTTP/1.1" 200 870
+INFO 2025-05-26 02:37:06,822 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:37:06,833 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:37:07,345 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1413
+INFO 2025-05-26 02:37:07,352 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:37:31,766 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1413
+INFO 2025-05-26 02:37:31,777 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:37:59,889 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1413
+INFO 2025-05-26 02:37:59,907 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:38:00,336 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1413
+INFO 2025-05-26 02:38:00,344 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:38:39,528 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1413
+INFO 2025-05-26 02:38:39,538 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:38:46,278 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1413
+INFO 2025-05-26 02:38:46,285 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:38:47,856 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1413
+INFO 2025-05-26 02:38:47,862 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:38:48,386 basehttp 15212 15336 "GET /api/event/1/ HTTP/1.1" 200 870
+INFO 2025-05-26 02:38:48,393 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:38:48,403 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:38:51,134 basehttp 15212 15336 "PUT /api/event/1/ HTTP/1.1" 200 868
+INFO 2025-05-26 02:38:52,147 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1411
+INFO 2025-05-26 02:38:52,153 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:38:53,104 basehttp 15212 15336 "GET /api/event/3/ HTTP/1.1" 200 174
+INFO 2025-05-26 02:38:53,113 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:38:53,119 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:38:53,927 basehttp 15212 15336 "PUT /api/event/3/ HTTP/1.1" 200 173
+INFO 2025-05-26 02:38:55,310 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1410
+INFO 2025-05-26 02:38:55,316 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:38:56,024 basehttp 15212 15336 "GET /api/event/2/ HTTP/1.1" 200 365
+INFO 2025-05-26 02:38:56,033 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:38:56,042 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:38:56,979 basehttp 15212 15336 "PUT /api/event/2/ HTTP/1.1" 200 364
+INFO 2025-05-26 02:38:58,388 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1409
+INFO 2025-05-26 02:38:58,394 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:38:58,871 basehttp 15212 15336 "GET /api/event/2/ HTTP/1.1" 200 364
+INFO 2025-05-26 02:38:58,877 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:38:58,885 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:38:59,703 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1409
+INFO 2025-05-26 02:38:59,713 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:39:01,153 basehttp 15212 15336 "GET /api/event/2/ HTTP/1.1" 200 364
+INFO 2025-05-26 02:39:01,161 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:39:01,169 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:39:01,870 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1409
+INFO 2025-05-26 02:39:01,875 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:39:02,868 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1409
+INFO 2025-05-26 02:39:02,877 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:39:03,478 basehttp 15212 15336 "GET /api/event/2/ HTTP/1.1" 200 364
+INFO 2025-05-26 02:39:03,489 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:39:03,497 basehttp 15212 15336 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:39:04,166 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1409
+INFO 2025-05-26 02:39:04,172 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:39:05,533 basehttp 15212 15336 "GET /api/events/ HTTP/1.1" 200 1409
+INFO 2025-05-26 02:39:05,542 basehttp 15212 15336 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:47:35,704 autoreload 15212 18612 D:\Codes\ProjectPrac\backend\djsite\user_account\models.py changed, reloading.
+INFO 2025-05-26 02:47:36,649 autoreload 15976 4980 Watching for file changes with StatReloader
+INFO 2025-05-26 02:48:22,476 autoreload 15976 4980 D:\Codes\ProjectPrac\backend\djsite\user_account\models.py changed, reloading.
+INFO 2025-05-26 02:48:23,324 autoreload 8748 5024 Watching for file changes with StatReloader
+INFO 2025-05-26 02:48:59,356 basehttp 8748 20912 "GET /api/events/ HTTP/1.1" 200 1409
+INFO 2025-05-26 02:48:59,365 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:00,015 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:00,023 basehttp 8748 20912 "OPTIONS /api/profile/1/ HTTP/1.1" 200 0
+INFO 2025-05-26 02:49:00,033 basehttp 8748 20912 "GET /api/profile/1/ HTTP/1.1" 200 1462
+INFO 2025-05-26 02:49:00,036 basehttp 8748 20912 "OPTIONS /api/tasks/ HTTP/1.1" 200 0
+INFO 2025-05-26 02:49:00,042 basehttp 8748 20912 "GET /api/tasks/ HTTP/1.1" 200 887
+INFO 2025-05-26 02:49:00,370 basehttp 8748 2044 "GET /media/profile_photos/%D1%84%D0%BE%D1%82%D0%BE_2.jpg HTTP/1.1" 304 0
+INFO 2025-05-26 02:49:25,062 basehttp 8748 20912 "GET /api/events/ HTTP/1.1" 200 1409
+INFO 2025-05-26 02:49:25,068 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:25,389 basehttp 8748 20912 "GET /api/events/ HTTP/1.1" 200 1409
+INFO 2025-05-26 02:49:25,396 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:26,344 basehttp 8748 20912 "GET /api/event/2/ HTTP/1.1" 200 364
+INFO 2025-05-26 02:49:26,355 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:26,364 basehttp 8748 20912 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:49:29,558 basehttp 8748 20912 "GET /api/events/ HTTP/1.1" 200 1409
+INFO 2025-05-26 02:49:29,565 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:31,193 basehttp 8748 20912 "GET /api/events/ HTTP/1.1" 200 1409
+INFO 2025-05-26 02:49:31,200 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:32,802 basehttp 8748 20912 "GET /api/event/3/ HTTP/1.1" 200 173
+INFO 2025-05-26 02:49:32,813 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:32,821 basehttp 8748 20912 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:49:34,044 basehttp 8748 20912 "PUT /api/event/3/ HTTP/1.1" 200 174
+INFO 2025-05-26 02:49:35,855 basehttp 8748 20912 "GET /api/events/ HTTP/1.1" 200 1410
+INFO 2025-05-26 02:49:35,861 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:36,416 basehttp 8748 20912 "GET /api/event/1/ HTTP/1.1" 200 868
+INFO 2025-05-26 02:49:36,424 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:36,433 basehttp 8748 20912 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:49:37,218 basehttp 8748 20912 "PUT /api/event/1/ HTTP/1.1" 200 870
+INFO 2025-05-26 02:49:38,044 basehttp 8748 20912 "GET /api/events/ HTTP/1.1" 200 1412
+INFO 2025-05-26 02:49:38,050 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:38,896 basehttp 8748 20912 "GET /api/event/2/ HTTP/1.1" 200 364
+INFO 2025-05-26 02:49:38,902 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:38,911 basehttp 8748 20912 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:49:39,637 basehttp 8748 20912 "PUT /api/event/2/ HTTP/1.1" 200 365
+INFO 2025-05-26 02:49:40,462 basehttp 8748 20912 "GET /api/events/ HTTP/1.1" 200 1413
+INFO 2025-05-26 02:49:40,470 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:41,145 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:41,159 basehttp 8748 20912 "GET /api/profile/1/ HTTP/1.1" 200 1465
+INFO 2025-05-26 02:49:41,166 basehttp 8748 20912 "GET /api/tasks/ HTTP/1.1" 200 887
+INFO 2025-05-26 02:49:44,101 basehttp 8748 20912 "GET /api/events/ HTTP/1.1" 200 1413
+INFO 2025-05-26 02:49:44,108 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:45,202 basehttp 8748 20912 "GET /api/event/2/ HTTP/1.1" 200 365
+INFO 2025-05-26 02:49:45,214 basehttp 8748 20912 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:49:45,222 basehttp 8748 20912 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:49:50,353 basehttp 8748 10116 "GET /api/profile/1/ HTTP/1.1" 200 16059
+INFO 2025-05-26 02:50:40,927 autoreload 8748 5024 D:\Codes\ProjectPrac\backend\djsite\user_account\serializers.py changed, reloading.
+INFO 2025-05-26 02:50:41,875 autoreload 10720 7916 Watching for file changes with StatReloader
+ERROR 2025-05-26 02:50:50,114 log 10720 4484 Internal Server Error: /api/profile/1/
+Traceback (most recent call last):
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Codes\ProjectPrac\backend\djsite\user_account\views.py", line 56, in get
+    'events': event_serializer.data
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\serializers.py", line 795, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\serializers.py", line 714, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\serializers.py", line 538, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\serializers.py", line 714, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\serializers.py", line 523, in to_representation
+    for field in fields:
+                 ^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\serializers.py", line 384, in _readable_fields
+    for field in self.fields.values():
+                 ^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\serializers.py", line 372, in fields
+    for key, value in self.get_fields().items():
+                      ^^^^^^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\serializers.py", line 1079, in get_fields
+    field_names = self.get_field_names(declared_fields, info)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\maksi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\rest_framework\serializers.py", line 1175, in get_field_names
+    assert field_name in fields, (
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: The field 'is_past' was declared on serializer TasksSerializer, but has not been included in the 'fields' option.
+ERROR 2025-05-26 02:50:50,121 basehttp 10720 4484 "GET /api/profile/1/ HTTP/1.1" 500 162359
+INFO 2025-05-26 02:51:20,540 autoreload 10720 7916 D:\Codes\ProjectPrac\backend\djsite\user_account\serializers.py changed, reloading.
+INFO 2025-05-26 02:51:21,420 autoreload 15028 2004 Watching for file changes with StatReloader
+INFO 2025-05-26 02:51:31,562 basehttp 15028 1616 "GET /api/profile/1/ HTTP/1.1" 200 16203
+INFO 2025-05-26 02:51:38,546 basehttp 15028 8288 "PUT /api/event/2/ HTTP/1.1" 200 379
+INFO 2025-05-26 02:51:41,701 basehttp 15028 1616 "GET /api/profile/1/ HTTP/1.1" 200 16203
+INFO 2025-05-26 02:51:43,745 basehttp 15028 1616 "GET /api/profile/1/ HTTP/1.1" 200 16203
+INFO 2025-05-26 02:51:49,174 basehttp 15028 8288 "GET /api/events/ HTTP/1.1" 200 1475
+INFO 2025-05-26 02:51:49,181 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:51:50,574 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:51:50,593 basehttp 15028 8288 "GET /api/profile/1/ HTTP/1.1" 200 1513
+INFO 2025-05-26 02:51:50,601 basehttp 15028 8288 "GET /api/tasks/ HTTP/1.1" 200 950
+INFO 2025-05-26 02:52:07,164 basehttp 15028 1616 "GET /api/profile/1/ HTTP/1.1" 200 16203
+INFO 2025-05-26 02:52:10,105 basehttp 15028 8288 "GET /api/events/ HTTP/1.1" 200 1475
+INFO 2025-05-26 02:52:10,112 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:52:10,503 basehttp 15028 8288 "GET /api/events/ HTTP/1.1" 200 1475
+INFO 2025-05-26 02:52:10,511 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:52:11,023 basehttp 15028 8288 "GET /api/event/2/ HTTP/1.1" 200 379
+INFO 2025-05-26 02:52:11,034 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:52:11,043 basehttp 15028 8288 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:52:38,097 basehttp 15028 1616 "GET /api/event/1/ HTTP/1.1" 200 15461
+INFO 2025-05-26 02:52:39,829 basehttp 15028 1616 "GET /api/event/1/ HTTP/1.1" 200 15461
+INFO 2025-05-26 02:52:41,795 basehttp 15028 1616 "GET /api/event/1/ HTTP/1.1" 200 15461
+INFO 2025-05-26 02:52:43,483 basehttp 15028 1616 "GET /api/event/20 HTTP/1.1" 301 0
+WARNING 2025-05-26 02:52:43,494 log 15028 5388 Not Found: /api/event/20/
+WARNING 2025-05-26 02:52:43,494 basehttp 15028 5388 "GET /api/event/20/ HTTP/1.1" 404 12972
+INFO 2025-05-26 02:52:47,462 basehttp 15028 5388 "GET /api/event/2 HTTP/1.1" 301 0
+INFO 2025-05-26 02:52:47,476 basehttp 15028 16452 "GET /api/event/2/ HTTP/1.1" 200 13931
+INFO 2025-05-26 02:52:54,990 basehttp 15028 8288 "GET /api/event/2/ HTTP/1.1" 200 379
+INFO 2025-05-26 02:52:55,001 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:52:55,012 basehttp 15028 8288 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:52:56,026 basehttp 15028 8288 "GET /api/events/ HTTP/1.1" 200 1475
+INFO 2025-05-26 02:52:56,034 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:52:57,405 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:52:57,420 basehttp 15028 8288 "GET /api/profile/1/ HTTP/1.1" 200 1513
+INFO 2025-05-26 02:52:57,427 basehttp 15028 8288 "GET /api/tasks/ HTTP/1.1" 200 950
+INFO 2025-05-26 02:53:00,019 basehttp 15028 8288 "GET /api/event/1/ HTTP/1.1" 200 918
+INFO 2025-05-26 02:53:00,025 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:53:00,033 basehttp 15028 8288 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:53:01,363 basehttp 15028 8288 "PUT /api/event/1/ HTTP/1.1" 200 914
+INFO 2025-05-26 02:53:03,027 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:53:03,041 basehttp 15028 8288 "GET /api/profile/1/ HTTP/1.1" 200 1509
+INFO 2025-05-26 02:53:03,048 basehttp 15028 8288 "GET /api/tasks/ HTTP/1.1" 200 947
+INFO 2025-05-26 02:53:05,153 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:53:05,167 basehttp 15028 8288 "GET /api/profile/1/ HTTP/1.1" 200 1509
+INFO 2025-05-26 02:53:05,175 basehttp 15028 8288 "GET /api/tasks/ HTTP/1.1" 200 947
+INFO 2025-05-26 02:53:14,046 basehttp 15028 16452 "GET /api/event/2/ HTTP/1.1" 200 13931
+INFO 2025-05-26 02:53:15,737 basehttp 15028 16452 "GET /api/event/1/ HTTP/1.1" 200 15457
+INFO 2025-05-26 02:54:29,323 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:54:29,339 basehttp 15028 8288 "GET /api/profile/1/ HTTP/1.1" 200 1509
+INFO 2025-05-26 02:54:29,359 basehttp 15028 8288 "GET /api/tasks/ HTTP/1.1" 200 947
+INFO 2025-05-26 02:54:31,970 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:54:31,986 basehttp 15028 8288 "GET /api/profile/1/ HTTP/1.1" 200 1509
+INFO 2025-05-26 02:54:31,994 basehttp 15028 8288 "GET /api/tasks/ HTTP/1.1" 200 947
+INFO 2025-05-26 02:54:34,728 basehttp 15028 8288 "GET /api/events/ HTTP/1.1" 200 1471
+INFO 2025-05-26 02:54:34,738 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:54:35,170 basehttp 15028 8288 "GET /api/events/ HTTP/1.1" 200 1471
+INFO 2025-05-26 02:54:35,180 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:54:35,921 basehttp 15028 8288 "GET /api/event/1/ HTTP/1.1" 200 914
+INFO 2025-05-26 02:54:35,930 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:54:35,939 basehttp 15028 8288 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:54:40,134 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:54:40,148 basehttp 15028 8288 "GET /api/profile/1/ HTTP/1.1" 200 1509
+INFO 2025-05-26 02:54:40,154 basehttp 15028 8288 "GET /api/tasks/ HTTP/1.1" 200 947
+INFO 2025-05-26 02:54:40,721 basehttp 15028 8288 "GET /api/event/3/ HTTP/1.1" 200 174
+INFO 2025-05-26 02:54:40,730 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:54:40,737 basehttp 15028 8288 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:54:41,498 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:54:41,515 basehttp 15028 8288 "GET /api/profile/1/ HTTP/1.1" 200 1509
+INFO 2025-05-26 02:54:41,521 basehttp 15028 8288 "GET /api/tasks/ HTTP/1.1" 200 947
+INFO 2025-05-26 02:54:42,938 basehttp 15028 8288 "OPTIONS /api/tasks/9/ HTTP/1.1" 200 0
+INFO 2025-05-26 02:54:42,951 basehttp 15028 8288 "PUT /api/tasks/9/ HTTP/1.1" 200 218
+INFO 2025-05-26 02:54:43,266 basehttp 15028 8288 "PUT /api/tasks/9/ HTTP/1.1" 200 218
+INFO 2025-05-26 02:54:46,960 basehttp 15028 8288 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:54:46,976 basehttp 15028 8288 "GET /api/profile/1/ HTTP/1.1" 200 1509
+INFO 2025-05-26 02:54:46,984 basehttp 15028 8288 "GET /api/tasks/ HTTP/1.1" 200 947
+INFO 2025-05-26 02:54:52,063 basehttp 15028 16452 "GET /api/event/1/ HTTP/1.1" 200 15457
+INFO 2025-05-26 02:55:53,652 basehttp 15028 18716 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:55:53,674 basehttp 15028 18716 "GET /api/profile/1/ HTTP/1.1" 200 1509
+INFO 2025-05-26 02:55:53,683 basehttp 15028 18716 "GET /api/tasks/ HTTP/1.1" 200 947
+INFO 2025-05-26 02:55:58,564 basehttp 15028 1548 "GET /api/event/1/ HTTP/1.1" 200 15457
+INFO 2025-05-26 02:56:00,345 basehttp 15028 18716 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:56:00,359 basehttp 15028 18716 "GET /api/profile/1/ HTTP/1.1" 200 1509
+INFO 2025-05-26 02:56:00,367 basehttp 15028 18716 "GET /api/tasks/ HTTP/1.1" 200 947
+INFO 2025-05-26 02:56:03,455 basehttp 15028 18716 "GET /api/event/1/ HTTP/1.1" 200 914
+INFO 2025-05-26 02:56:03,463 basehttp 15028 18716 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:56:03,473 basehttp 15028 18716 "GET /projects/ HTTP/1.1" 200 845
+INFO 2025-05-26 02:56:05,100 basehttp 15028 18716 "PUT /api/event/1/ HTTP/1.1" 200 918
+INFO 2025-05-26 02:56:06,010 basehttp 15028 18716 "GET /api/users/ HTTP/1.1" 200 1562
+INFO 2025-05-26 02:56:06,026 basehttp 15028 18716 "GET /api/profile/1/ HTTP/1.1" 200 1513
+INFO 2025-05-26 02:56:06,033 basehttp 15028 18716 "GET /api/tasks/ HTTP/1.1" 200 950

@@ -37,6 +37,13 @@ class Event(models.Model):
     is_past = models.IntegerField(default=0)
     is_cancelled = models.BooleanField(null=True, blank=True, default=False)
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # После сохранения обновляем is_past у всех задач этого мероприятия
+        from .models import Tasks
+        is_event_past = self.is_past or self.is_cancelled
+        Tasks.objects.filter(event=self).update(is_past=is_event_past)
+
     def __str__(self):
         return self.title
 
@@ -53,6 +60,7 @@ class Tasks(models.Model):
         (3, 'Выполнена')
     ]
     status = models.PositiveSmallIntegerField(choices=STATUS, default=2)
+    is_past = models.BooleanField(default=False)
     
     def __str__(self):
         return self.task

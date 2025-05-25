@@ -17,10 +17,11 @@ class TasksSerializer(serializers.ModelSerializer):
     creator = serializers.HiddenField(default=serializers.CurrentUserDefault())
     executor = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
     event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
+    is_past = serializers.BooleanField(required=False)
 
     class Meta:
         model = Tasks
-        fields = ['id', 'task', 'description', 'event', 'deadline', 'creator', 'executor', 'status']
+        fields = ['id', 'task', 'description', 'event', 'deadline', 'creator', 'executor', 'status', 'is_past']
 
 class EventSerializer(serializers.ModelSerializer):
     organizers = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
