@@ -233,7 +233,7 @@ class TaskListCreateView(APIView):
         if event_id:
             tasks = tasks.filter(event_id=event_id)
         if user_id:
-            tasks = tasks.filter(executor_id=user_id)
+            tasks = tasks.filter(executor=user_id)
         
         serializer = TasksSerializer(tasks, many=True)
         return Response(serializer.data)

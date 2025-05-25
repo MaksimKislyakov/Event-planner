@@ -46,7 +46,7 @@ class Tasks(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='tasks_for_event')
     deadline = models.DateField(blank=True, null=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_tasks')
-    executor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='executed_tasks')
+    executor = models.ManyToManyField(User, related_name='executed_tasks', blank=True)
     STATUS = [
         (1, 'В процессе'),
         (2, 'Не начата'),

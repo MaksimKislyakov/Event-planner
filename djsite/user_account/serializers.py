@@ -15,7 +15,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class TasksSerializer(serializers.ModelSerializer):
     creator = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    executor = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), allow_null=True, required=False)
+    executor = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
     event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
 
     class Meta:
