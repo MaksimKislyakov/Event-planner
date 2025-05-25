@@ -26,11 +26,12 @@ class EventSerializer(serializers.ModelSerializer):
     organizers = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
     participants = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
     is_past = serializers.BooleanField()
+    is_cancelled = serializers.BooleanField()
     tasks = TasksSerializer(many=True, read_only=True, source='tasks_for_event')
     
     class Meta:
         model = Event
-        fields = ['id', 'title', 'description', 'date', 'organizers', 'files', 'tasks', 'participants', 'projects', 'is_past']
+        fields = ['id', 'title', 'description', 'date', 'organizers', 'files', 'tasks', 'participants', 'projects', 'is_past', 'is_cancelled']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

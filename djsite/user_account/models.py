@@ -35,6 +35,7 @@ class Event(models.Model):
     participants = models.ManyToManyField(User, related_name='events', blank=True)
     projects = models.ManyToManyField(Project, related_name='events', blank=True)
     is_past = models.IntegerField(default=0)
+    is_cancelled = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
