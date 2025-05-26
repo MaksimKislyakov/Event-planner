@@ -109,16 +109,15 @@ class CreateGoogleDocumentView(APIView):
 
     def delete(self, request, file_id):
         try:
-            # Получаем файл из базы данных
             project_file = get_object_or_404(ProjectFile, id=file_id)
-            
-            # Извлекаем ID файла из URL
+            # Если это ссылка, просто удаляем из базы
+            if project_file.file_type == 'Ссылка':
+                project_file.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            # Для остальных файлов — удаляем из Google Drive
             file_url = project_file.file_url
             google_file_id = file_url.split('/')[-2]  # Получаем ID файла из URL
-            
-            # Удаляем файл из Google Drive
             if delete_google_file(google_file_id):
-                # Если удаление из Google Drive успешно, удаляем запись из базы данных
                 project_file.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
             else:
