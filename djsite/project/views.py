@@ -59,9 +59,23 @@ class CreateGoogleDocumentView(APIView):
         doc_type = request.data.get('doc_type')
         title = request.data.get('title')
         custom_name = request.data.get('custom_name')
+        file_url = request.data.get('file_url')
 
         if not doc_type or not title:
             return Response({"error": "doc_type and title are required fields."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if doc_type == 'link':
+            if not file_url:
+                return Response({'error': 'file_url is required for link'}, status=400)
+            project = get_object_or_404(Project, pk=project_id)
+            project_file = ProjectFile.objects.create(
+                project=project,
+                file_type='Ссылка',
+                file_url=file_url,
+                file_name=custom_name or title
+            )
+            file_serializer = ProjectFileSerializer(project_file)
+            return Response(file_serializer.data, status=status.HTTP_201_CREATED)
 
         file_id, file_type, file_url = None, None, None
         if doc_type == 'doc':
