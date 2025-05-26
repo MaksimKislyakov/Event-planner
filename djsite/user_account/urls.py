@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('api/users/', views.UserListView.as_view(), name='api_user_list'),
+    path('api/users/<int:user_id>/', views.UserListView.as_view(), name='api_user_detail'),
     path('api/profile/<int:user_id>/', views.ProfileView.as_view(), name='api_profile'),
     path('api/profile_view/<int:user_id>/', views.OtherProfileView.as_view(), name='api_other_profile'),
     path('api/events/', views.EventListCreateView.as_view(), name='api_events'),

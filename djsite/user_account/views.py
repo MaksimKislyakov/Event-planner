@@ -153,6 +153,36 @@ class UserListView(APIView):
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    def post(self, request):
+        try:
+            # Проверяем уровень доступа
+            current_profile = UserProfile.objects.get(user=request.user)
+            if current_profile.access_level < 3:
+                return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
+
+            serializer = UserProfileSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, user_id):
+        try:
+            # Проверяем уровень доступа
+            current_profile = UserProfile.objects.get(user=request.user)
+            if current_profile.access_level < 3:
+                return Response({"error": "Access denied"}, status=status.HTTP_403_FORBIDDEN)
+
+            profile = UserProfile.objects.get(user_id=user_id)
+            profile.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except UserProfile.DoesNotExist:
+            return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class EventListCreateView(APIView):
     permission_classes = [IsAuthenticated]
