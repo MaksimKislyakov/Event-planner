@@ -17,6 +17,10 @@ import logging
 logger = logging.getLogger(__name__)
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """
+    Расширенный сериализатор для получения JWT токена.
+    Добавляет дополнительную информацию о пользователе в токен.
+    """
     def validate(self, attrs):
         data = super().validate(attrs)
 
@@ -33,10 +37,20 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         return data
 
 class CustomTokenObtainPairView(TokenObtainPairView):
+    """
+    Представление для получения JWT токена с дополнительной информацией о пользователе.
+    """
     serializer_class = CustomTokenObtainPairSerializer
     
 
 class ProfileView(APIView):
+    """
+    API представление для работы с профилем пользователя.
+    
+    Методы:
+        get: Получение информации о профиле пользователя и связанных мероприятиях
+        put: Обновление информации профиля пользователя
+    """
     permission_classes = [IsAuthenticated]
     
     def get(self, request, user_id):
@@ -93,6 +107,14 @@ class ProfileView(APIView):
     
 
 class OtherProfileView(APIView):
+    """
+    API представление для просмотра и редактирования профилей других пользователей.
+    Доступно только для администраторов (access_level >= 3).
+    
+    Методы:
+        get: Получение информации о профиле другого пользователя
+        put: Обновление комиссии и статуса пользователя
+    """
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, user_id):
@@ -143,6 +165,15 @@ class OtherProfileView(APIView):
 
 
 class UserListView(APIView):
+    """
+    API представление для работы со списком пользователей.
+    Доступно только для администраторов (access_level >= 3).
+    
+    Методы:
+        get: Получение списка всех пользователей
+        post: Создание нового пользователя
+        delete: Удаление пользователя по ID
+    """
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -185,6 +216,13 @@ class UserListView(APIView):
 
 
 class EventListCreateView(APIView):
+    """
+    API представление для работы со списком мероприятий.
+    
+    Методы:
+        get: Получение списка всех мероприятий
+        post: Создание нового мероприятия
+    """
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -212,6 +250,14 @@ class EventListCreateView(APIView):
     
     
 class EventDetailView(APIView):
+    """
+    API представление для работы с отдельным мероприятием.
+    
+    Методы:
+        get: Получение информации о конкретном мероприятии
+        put: Обновление информации о мероприятии (только для администраторов)
+        delete: Удаление мероприятия (только для администраторов)
+    """
     permission_classes = [IsAuthenticated]
 
     def get(self, request, event_id):
@@ -252,6 +298,13 @@ class EventDetailView(APIView):
         
 
 class TaskListCreateView(APIView):
+    """
+    API представление для работы со списком задач.
+    
+    Методы:
+        get: Получение списка всех задач
+        post: Создание новой задачи
+    """
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -280,6 +333,14 @@ class TaskListCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class TaskDetailView(APIView):
+    """
+    API представление для работы с отдельной задачей.
+    
+    Методы:
+        get: Получение информации о конкретной задаче
+        put: Обновление информации о задаче
+        delete: Удаление задачи
+    """
     permission_classes = [IsAuthenticated]
 
     def get_object(self, task_id):

@@ -5,6 +5,21 @@ from datetime import date
 from phonenumber_field.modelfields import PhoneNumberField
 
 class UserProfile(models.Model):
+    """
+    Модель профиля пользователя, расширяющая стандартную модель User Django.
+    
+    Attributes:
+        user (OneToOneField): Связь один-к-одному с моделью User Django
+        full_name (CharField): Полное имя пользователя
+        date_of_birth (DateField): Дата рождения (опционально)
+        commission (CharField): Комиссия или отдел пользователя
+        status (CharField): Статус пользователя
+        number_phone (PhoneNumberField): Номер телефона в российском формате
+        email (EmailField): Email адрес
+        adress (CharField): Адрес пользователя
+        profile_photo (ImageField): Фотография профиля
+        access_level (PositiveSmallIntegerField): Уровень доступа пользователя (1-Viewer, 2-Editor, 3-Admin)
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100)
     date_of_birth = models.DateField(null=True, blank=True)
@@ -27,6 +42,20 @@ class UserProfile(models.Model):
 
 
 class Event(models.Model):
+    """
+    Модель мероприятия или события.
+    
+    Attributes:
+        title (CharField): Название мероприятия
+        description (TextField): Описание мероприятия
+        date (DateField): Дата проведения
+        organizers (ManyToManyField): Связь с пользователями-организаторами
+        files (FileField): Прикрепленные файлы
+        participants (ManyToManyField): Связь с участниками мероприятия
+        projects (ManyToManyField): Связь с проектами, связанными с мероприятием
+        is_past (IntegerField): Флаг, указывающий, что мероприятие в прошлом
+        is_cancelled (BooleanField): Флаг отмены мероприятия
+    """
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     date = models.DateField()
@@ -48,6 +77,19 @@ class Event(models.Model):
         return self.title
 
 class Tasks(models.Model):
+    """
+    Модель задачи, связанной с мероприятием.
+    
+    Attributes:
+        task (CharField): Название задачи
+        description (CharField): Описание задачи
+        event (ForeignKey): Связь с мероприятием
+        deadline (DateField): Срок выполнения
+        creator (ForeignKey): Создатель задачи
+        executor (ManyToManyField): Исполнители задачи
+        status (PositiveSmallIntegerField): Статус задачи (1-В процессе, 2-Не начата, 3-Выполнена)
+        is_past (BooleanField): Флаг, указывающий, что задача в прошлом
+    """
     task = models.CharField(max_length=20000)
     description = models.CharField(blank=True, max_length=20000)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='tasks_for_event')

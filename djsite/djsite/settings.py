@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'phonenumber_field',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -188,7 +189,7 @@ LOGIN_REDIRECT_URL = '/profile/'
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000", 
-    "https://irit-rtf-ep.ru", # твой фронт
+    "https://irit-rtf-ep.ru",
 ]
 
 STATIC_URL = '/static/'

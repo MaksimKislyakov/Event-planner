@@ -9,6 +9,13 @@ from .google_api import create_google_doc, create_google_sheet, create_google_sl
 from rest_framework.permissions import IsAuthenticated
 
 class ProjectListView(APIView):
+    """
+    API представление для работы со списком проектов.
+    Возвращает только корневые проекты (без родительского проекта).
+    
+    Методы:
+        get: Получение списка всех корневых проектов
+    """
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
@@ -19,6 +26,13 @@ class ProjectListView(APIView):
     
 
 class ProjectDetailView(APIView):
+    """
+    API представление для работы с отдельным проектом.
+    
+    Методы:
+        get: Получение детальной информации о проекте
+        delete: Удаление проекта
+    """
     permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
@@ -32,6 +46,16 @@ class ProjectDetailView(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
 
 class CreateProjectView(APIView):
+    """
+    API представление для создания нового проекта.
+    Поддерживает создание как корневого проекта, так и подпроекта.
+    
+    Методы:
+        post: Создание нового проекта
+            Параметры:
+                parent_id: ID родительского проекта (опционально)
+                event_id: ID связанного мероприятия (опционально)
+    """
     permission_classes = [IsAuthenticated]
 
     def post(self, request, parent_id=None):
@@ -53,6 +77,22 @@ class CreateProjectView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CreateGoogleDocumentView(APIView):
+    """
+    API представление для создания и управления документами Google Workspace,
+    связанными с проектом.
+    
+    Методы:
+        post: Создание нового документа Google Workspace или добавление внешней ссылки
+            Параметры:
+                doc_type: Тип документа ('doc', 'sheet', 'slide', 'form', 'link')
+                title: Название документа
+                custom_name: Пользовательское имя файла (опционально)
+                file_url: URL для внешней ссылки (только для doc_type='link')
+        
+        delete: Удаление документа
+            - Для внешних ссылок: удаление только из базы данных
+            - Для Google Workspace: удаление из Google Drive и базы данных
+    """
     permission_classes = [IsAuthenticated]
 
     def post(self, request, project_id):
